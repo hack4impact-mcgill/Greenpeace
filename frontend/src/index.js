@@ -1,11 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import { useMemo } from "react";
+import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export default function Home() {
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: "AIzaSyBjmCT9aE4BKFvU5vDsz9lKs-864dpDpB0",
+  });
+
+  if (!isLoaded) return <div>Loading...</div>;
+  return <Map />;
+}
+
+function Map() {
+  const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+
+  return (
+    <>
+    <GoogleMap zoom={10} center={center} mapContainerClassName="map-container">
+      <Marker position={center} />
+    </GoogleMap>
+    <div>Hellooooo</div>
+    </>
+  );
+}
