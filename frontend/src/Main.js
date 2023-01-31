@@ -32,15 +32,15 @@ useEffect(() => {
 return (
     <GoogleMap
     defaultZoom={19}
-    defaultCenter={{ lat: 43.6561, lng: -79.3802}}
+    defaultCenter={{ lat: 45.5048, lng: -73.5772}}
     options={{ styles: mapStyles }}
     >
     {parkData.features.map(park => (
         <Marker
         key={park.properties.PARK_ID}
         position={{
-            lat: park.geometry.coordinates[1],
-            lng: park.geometry.coordinates[0]
+            lat: park.geometry.coordinates[0],
+            lng: park.geometry.coordinates[1]
         }}
         onClick={() => {
             setSelectedPark(park);
@@ -58,8 +58,8 @@ return (
             setSelectedPark(null);
         }}
         position={{
-            lat: selectedPark.geometry.coordinates[1],
-            lng: selectedPark.geometry.coordinates[0]
+            lat: selectedPark.geometry.coordinates[0],
+            lng: selectedPark.geometry.coordinates[1]
         }}
         >
         <div>
@@ -77,17 +77,16 @@ const MapWrapped = withScriptjs(withGoogleMap(Map));
 const API_KEY = process.env.REACT_APP_KEY;
 
 export default function Main() {
-return (
-    <HashRouter>
-        <div style={{ width: "97vw", height: "100vh" }}>
-        <MapWrapped
-            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `100%` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-        />
-        </div>
-    </HashRouter>
-
+    return (
+        <HashRouter>
+            <div style={{ width: "97vw", height: "100vh" }}>
+            <MapWrapped
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `100%` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+            />
+            </div>
+        </HashRouter>
     );
 }
