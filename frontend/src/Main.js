@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, NavLink, HashRouter } from "react-router-dom";
+import { Button } from "@material-ui/core"
 
 import {
     withScriptjs,
@@ -76,7 +77,19 @@ return (
 const MapWrapped = withScriptjs(withGoogleMap(Map));
 const API_KEY = process.env.REACT_APP_KEY;
 
+function getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
+}
+
 export default function Main() {
+    const handleAddPin = () => {
+        // generate pin with random latitude and longitude
+        const latitude = getRandomInRange(-180, 180, 3);
+        const longitude = getRandomInRange(-180, 180, 3);
+        console.log("Added new pin with coordinates: ", latitude, longitude);
+    }
+
     return (
         <HashRouter>
             <div style={{ width: "97vw", height: "100vh" }}>
@@ -87,6 +100,7 @@ export default function Main() {
                 containerElement={<div style={{ height: `80%` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
             />
+            <Button color="primary" variant="outlined" onClick={handleAddPin}>Add Random Pin</Button>
             </div>
         </HashRouter>
     );
