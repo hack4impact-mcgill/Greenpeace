@@ -82,11 +82,12 @@ export default function Main() {
             <div style={{ width: "97vw", height: "100vh" }}>
             <MapWrapped
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `100%` }} />}
+                loadingElement={<div style={{ height: `80%` }} />}
+                containerElement={<div style={{ height: `80%` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
             />
             </div>
+            
         </HashRouter>
     );
 }
