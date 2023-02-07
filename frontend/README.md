@@ -1,3 +1,10 @@
+# Before running the app
+1. Create a `.env` file under the frontend root folder.
+2. Add the following line to `.env`:
+```
+REACT_APP_KEY="{replace_with_the_google_maps_api_key}"
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
