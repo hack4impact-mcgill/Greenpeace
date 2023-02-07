@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Route, NavLink, HashRouter } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { HashRouter } from "react-router-dom";
 
 import {
     withScriptjs,
@@ -9,68 +9,54 @@ import {
     InfoWindow,
 } from "react-google-maps";
 import mapStyles from './mapStyles';
-import * as parkData from "./data/parkData.json";
-
+import { PinContext } from "./contexts"
 
 function Map() {
-const [selectedPark, setSelectedPark] = useState(null);
+    const [selectedPin, setSelectedPin] = useState(null);
+    const { pins, setPins } = useContext(PinContext);
 
-useEffect(() => {
-    const listener = e => {
-    if (e.key === "Escape") {
-        setSelectedPark(null);
-    }
-    };
-    window.addEventListener("keydown", listener);
-
-    return () => {
-    window.removeEventListener("keydown", listener);
-    };
-}, []);
-
-
-return (
-    <GoogleMap
-    defaultZoom={19}
-    defaultCenter={{ lat: 45.5048, lng: -73.5772}}
-    options={{ styles: mapStyles }}
-    >
-    {parkData.features.map(park => (
-        <Marker
-        key={park.properties.PARK_ID}
-        position={{
-            lat: park.geometry.coordinates[0],
-            lng: park.geometry.coordinates[1]
-        }}
-        onClick={() => {
-            setSelectedPark(park);
-        }}
-        icon={{
-            url:  "https://img.icons8.com/color/48/000000/map-pin.png",
-            scaledSize: new window.google.maps.Size(50, 50)
-        }}
-        />
-    ))}
-
-    {selectedPark && (
-        <InfoWindow
-        onCloseClick={() => {
-            setSelectedPark(null);
-        }}
-        position={{
-            lat: selectedPark.geometry.coordinates[0],
-            lng: selectedPark.geometry.coordinates[1]
-        }}
+    return (
+        <GoogleMap
+            defaultZoom={19}
+            defaultCenter={{ lat: 45.5048, lng: -73.5772}}
+            options={{ styles: mapStyles }}
         >
-        <div>
-            <h2>{selectedPark.properties.NAME}</h2>
-            <p>{selectedPark.properties.DESCRIPTIO}</p>
-        </div>
-        </InfoWindow>
-    )}
-    </GoogleMap>
-    
-);
+            {pins.map(pin => (
+                <Marker
+                key={ pin.id }
+                position={{
+                    lat: pin.coordinates[0],
+                    lng: pin.coordinates[1]
+                }}
+                onClick={() => {
+                    setSelectedPin(pin);
+                }}
+                icon={{
+                    url:  "https://img.icons8.com/color/48/000000/map-pin.png",
+                    scaledSize: new window.google.maps.Size(50, 50)
+                }}
+                />
+            ))}
+
+            {selectedPin && (
+                <InfoWindow
+                onCloseClick={() => {
+                    setSelectedPin(null);
+                }}
+                position={{
+                    lat: selectedPin.coordinates[0],
+                    lng: selectedPin.coordinates[1]
+                }}
+                >
+                    <div>
+                        <h2>{selectedPin.location}</h2>
+                        <p>{selectedPin.description}</p>
+                    </div>
+                </InfoWindow>
+            )}
+        </GoogleMap>
+        
+    );
 }
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
