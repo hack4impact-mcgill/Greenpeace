@@ -10,10 +10,13 @@ import {
 } from "react-google-maps";
 import mapStyles from './mapStyles';
 import * as parkData from "./data/parkData.json";
+import SlidingForm from "./SlidingForm";
+import { Button } from '@mui/material';
 
 
 function Map() {
 const [selectedPark, setSelectedPark] = useState(null);
+const [showPanel, setShowPanel] = useState(false);
 
 useEffect(() => {
     const listener = e => {
@@ -35,6 +38,12 @@ return (
     defaultCenter={{ lat: 45.5048, lng: -73.5772}}
     options={{ styles: mapStyles }}
     >
+
+    <Button  onClick={()=> setShowPanel(true)} > Open </Button>
+
+    <SlidingForm setShowPanel={setShowPanel} open={showPanel} />
+
+
     {parkData.features.map(park => (
         <Marker
         key={park.properties.PARK_ID}
