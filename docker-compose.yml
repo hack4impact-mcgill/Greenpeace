@@ -1,0 +1,10 @@
+version: '3'
+services:
+  greenpeace_dev:
+    image: 'postgres'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'greenpeace'
+      POSTGRES_PASSWORD: 'greenpeace123'
+      POSTGRES_DB: 'greenpeace_dev'
