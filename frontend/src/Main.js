@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { HashRouter } from "react-router-dom";
 import { Button } from "@material-ui/core"
 
@@ -56,7 +56,6 @@ function Map() {
                 </InfoWindow>
             )}
         </GoogleMap>
-        
     );
 }
 
@@ -69,14 +68,29 @@ function getRandomInRange(from, to, fixed) {
 }
 
 export default function Main() {
+    const [ count, setCount ] = useState(2);
+    const [ pins, setPins ] = useState([]);
+    const value = { pins, setPins };
+
     const handleAddPin = () => {
         // generate pin with random latitude and longitude
-        const latitude = getRandomInRange(-180, 180, 3);
-        const longitude = getRandomInRange(-180, 180, 3);
+        const latitude = getRandomInRange(45, 46, 4);
+        const longitude = getRandomInRange(-73, -74, 4);
+        
+        const newPin = {
+            id: count,
+            coordinates: [latitude, longitude],
+            location: "New place",
+            description: "Description"
+        };
+        setCount(count + 1);
+        setPins([...pins, newPin]);
         console.log("Added new pin with coordinates: ", latitude, longitude);
+        console.log(pins)
     }
 
     return (
+        <PinContext.Provider value={value}>
         <HashRouter>
             <div style={{ width: "97vw", height: "100vh" }}>
 
@@ -89,5 +103,6 @@ export default function Main() {
             <Button color="primary" variant="outlined" onClick={handleAddPin}>Add Random Pin</Button>
             </div>
         </HashRouter>
+        </PinContext.Provider>
     );
 }
