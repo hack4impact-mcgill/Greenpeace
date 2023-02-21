@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { HashRouter } from "react-router-dom";
-import { Button } from "@material-ui/core"
+import { Button, Link } from "@material-ui/core"
 
 import {
     withScriptjs,
@@ -52,6 +52,13 @@ function Map() {
                     <div>
                         <h2>{selectedPin.location}</h2>
                         <p>{selectedPin.description}</p>
+                        <Link
+                            component="button"
+                            variant="body2"
+                            onClick={() => {}}
+                        >
+                            Expand
+                        </Link>
                     </div>
                 </InfoWindow>
             )}
@@ -96,11 +103,17 @@ export default function Main() {
 
             <MapWrapped
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                loadingElement={<div style={{ height: `80%` }} />}
-                containerElement={<div style={{ height: `80%` }} />}
+                loadingElement={<div style={{ height: `95%` }} />}
+                containerElement={<div style={{ height: `95%` }} />}
                 mapElement={<div style={{ height: `100%` }} />}
+                style={{ zIndex: -1 }}
             />
-            <Button color="primary" variant="outlined" onClick={handleAddPin}>Add Random Pin</Button>
+            <Button 
+                color="primary" 
+                variant="contained" 
+                style={{ zIndex: 1, marginTop: "-15vh", position: "absolute", right: "10vh", height: "65px", width: "50px", fontSize: "60px", borderRadius: "50px", fontWeight: "300" }} 
+                onClick={handleAddPin}
+            >+</Button>
             </div>
         </HashRouter>
         </PinContext.Provider>
