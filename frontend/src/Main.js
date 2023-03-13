@@ -48,6 +48,7 @@ function Map() {
                     lat: selectedPin.coordinates[0],
                     lng: selectedPin.coordinates[1]
                 }}
+                justify="center"
                 >
                     <div>
                         <h2>{selectedPin.location}</h2>
@@ -111,7 +112,17 @@ export default function Main() {
             <Button 
                 color="primary" 
                 variant="contained" 
-                style={{ zIndex: 1, marginTop: "-15vh", position: "absolute", right: "10vh", height: "65px", width: "50px", fontSize: "60px", borderRadius: "50px", fontWeight: "300" }} 
+                style={{ 
+                    zIndex: 1, 
+                    marginTop: "-15vh", 
+                    position: "absolute", 
+                    right: "12vh", 
+                    height: "65px", 
+                    width: "50px", 
+                    fontSize: "60px", 
+                    borderRadius: "50px", 
+                    fontWeight: "300" 
+                }} 
                 onClick={handleAddPin}
             >+</Button>
             </div>
