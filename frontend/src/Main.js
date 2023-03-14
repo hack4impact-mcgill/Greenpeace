@@ -114,6 +114,16 @@ export default function Main() {
                 variant="contained" 
                 style={{ 
                     zIndex: 1, 
+                    position: "absolute", 
+                    top: "4vh",
+                    right: "12vh"
+                }} 
+            >Filter</Button>
+            <Button 
+                color="primary" 
+                variant="contained" 
+                style={{ 
+                    zIndex: 1, 
                     marginTop: "-15vh", 
                     position: "absolute", 
                     right: "12vh", 
