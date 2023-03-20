@@ -1,0 +1,1 @@
+export { fakeGETPin, fakePOSTPin, fakePUTPin, fakeDELETEPin } from "./pins";

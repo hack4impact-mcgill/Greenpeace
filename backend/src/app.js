@@ -1,13 +1,14 @@
 import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import { Pool } from "pg";
+import { fakeGETPin } from "../routes";
 
 // https://dev.to/chandrapantachhetri/docker-postgres-node-typescript-setup-47db
 
 const app = express();
 dotenv.config(); //Reads .env file and makes it accessible via process.env
 
-app.get("/test", (req: Request, res: Response, next: NextFunction) => {
+app.get("/test", (req, res, next) => {
   res.send("hi");
 });
 
@@ -31,3 +32,5 @@ const connectToDB = async () => {
   }
 };
 connectToDB();
+
+fakeGETPin();

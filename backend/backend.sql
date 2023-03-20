@@ -27,4 +27,5 @@ CREATE TABLE Pin (
     `is_valid` boolean NOT NULL,
     `category` Category NOT NULL,
     `created_time` datetime NOT NULL,
+    `address` varchar(1000) NOT NULL,
 )

@@ -9,7 +9,7 @@ services:
     depends_on:
       - db
     volumes:
-    - .:/usr/src/app
+    - ./backend/src:/app/src
 
   db:
     container_name: postgres
@@ -24,3 +24,4 @@ services:
 
 volumes: 
  data: {}
+ 
