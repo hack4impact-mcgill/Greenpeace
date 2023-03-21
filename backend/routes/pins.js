@@ -13,6 +13,20 @@ export const getPin = (id) => {
 };
 
 // POST
+
+// pinData is an object with the following properties:
+// {
+// 	id: 123,
+// 	name: 'New Pin',
+// 	description: 'This is a new pin',
+// 	coordinate_x: 1.234,
+// 	coordinate_y: 5.678,
+// 	is_valid: true,
+// 	category: 'Example Category',
+// 	created_time: '2023-03-21T12:34:56Z',
+// 	address: '123 Example St, City, State ZIP'
+// }
+
 export const postPin = (pinData) => {
 	return fetch(`http://localhost:5001`, {
 		headers: {
