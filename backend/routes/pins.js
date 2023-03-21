@@ -1,53 +1,35 @@
 // creating end points for pins
 
 
-import express, { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
-import { Pool } from "pg";
-
-
-// GET
-
-export const fakeGETPin = () => {
-	return fetch('http://localhost:5001/test', {
+// GET 
+export const getPin = (id) => {
+	return fetch(`http://localhost:5001/test/${id}`, {
 		method: 'GET'
 	}).then((response) => {
-		console.log(response);
-	})
+		return response.json();
+	}).catch((error) => {
+		console.error('Error:', error);
+	  });
 };
 
 // POST
-
-export const fakePOSTPin = () => {
-	return fetch(URL, {
+export const postPin = (pinData) => {
+	return fetch(`http://localhost:5001`, {
 		headers: {
-			'Content-Type': 'application/json'
+		  'Content-Type': 'application/json'
 		},
 		method: 'POST',
-		body: JSON.stringify({ test: 'POST' })
-	}).then((response) => {
+		body: JSON.stringify(pinData)
+	  }).then((response) => {
 		console.log(response);
-	})
-};
-
-// PUT
-
-export const fakePUTPin = () => {
-	return fetch(URL, {
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		method: 'PUT',
-		body: JSON.stringify({ test: 'PUT' })
-	}).then((response) => {
-		console.log(response);
-	})
+	  }).catch((error) => {
+		console.error('Error:', error);
+	  });
 };
 
 // DELETE
-
-export const fakeDELETEPin = () => {
-    return fetch(URL, {
+export const DELETEPin = (id) => {
+    return fetch(`http://localhost:5001/${id}`, {
         method: 'DELETE'
     }).then((response) => {
         console.log(response);
