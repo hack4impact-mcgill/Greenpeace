@@ -68,7 +68,7 @@ function Map() {
 }
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
-const API_KEY = process.env.REACT_APP_KEY;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function getRandomInRange(from, to, fixed) {
     return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
