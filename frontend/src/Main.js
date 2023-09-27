@@ -74,7 +74,9 @@ return (
 }
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
-const API_KEY = process.env.REACT_APP_KEY;
+const API_KEY = process.env.REACT_APP_API_KEY;
+console.log(API_KEY)
+console.log(`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places`)
 
 export default function Main() {
     return (

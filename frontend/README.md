@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## Setting up environment variables
+To copy over the environment variables, run
+```
+cp .env.example .env
+```
+To get the value of `REACT_APP_API_KEY`, ask one of the PMs or tech leads :)
+
 ## Available Scripts
 
 In the project directory, you can run:
