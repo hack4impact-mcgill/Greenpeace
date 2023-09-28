@@ -1,77 +1,65 @@
-# Before running the app
-1. Create a `.env` file under the frontend root folder.
-2. Add the following line to `.env`:
+# Greenpeace Frontend
+
+## Overview
+The frontend of the application will serve the maps UI by accessing the Google Maps API and rendering the result using React, with additional components from Material UI. Our complete (frontend) tech stack is:
+- React.js
+- Material UI
+- Google Maps API
+
+
+Currently, the local view of running the app should look like this:
+
+![Local view of Greenpeace frontend](/frontend/src/assets/working_home_page.jpg)
+
+## Setup
+
+To create the `.env` file, copy the `.env.example` file, make sure you are in the `frontend` folder and run the following:
 ```
-REACT_APP_KEY="{replace_with_the_google_maps_api_key}"
+cp .env.example .env
 ```
+To get the value of `REACT_APP_API_KEY`, ask one of the PMs or tech leads :)
 
-# Getting Started with Create React App
+Next, install the necessary packages with the following:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```
+npm install
+```
+Note: Whenever there are new packages introduced to the project, this command will need to be run by everyone pulling the project from Github.
 
-## Available Scripts
+## Running
+After the dependencies have been installed, the project is now ready to be run! Use the following:
+```
+npm start
+```
+You should see a view similar to that displayed in the Overview.
 
-In the project directory, you can run:
+## Common Issues
 
-### `npm start`
+### Issue: 
+The frontend isn't loading - "Oops! Something went wrong."
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Reason:
+If you are seeing something similar to this [view](/frontend/src/assets/error_home_page.jpg). It probably means the `REACT_APP_API_KEY` isn't set up properly.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+### Possible Solutions:
+- Double check the value of the key is correct (confirm with PMs/tech leads).
+- Double check the spelling of the env variable is correct - `process.env.REACT_APP_API_KEY` and `REACT_APP_API_KEY` should be spelled the same.
+- Double check the `.env` folder is located under `frontend/` and not `src/`.
+- The API key has expired, so a new one will need to be regenerated.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+### Issue:
+`Error: error:0308010C:digital envelope routines::unsupported`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Reason (Suspected):
+The current API and framework isn't compatible with every version of Node.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Possible Solutions:
+- Downgrade the Node version (detailed in https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
+- **This will require further investigation.**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Feel free to add any other issue, or let the leads know!
