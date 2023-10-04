@@ -57,7 +57,7 @@ If you are seeing something similar to this [view](/frontend/src/assets/error_ho
 The current API and framework isn't compatible with every version of Node.
 
 ### Possible Solutions:
-- Downgrade the Node version (detailed in https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
+- Downgrade the Node version to v16.20.2 (detailed in https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
 - **This will require further investigation.**
 
 ---
