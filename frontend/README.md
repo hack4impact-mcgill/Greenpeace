@@ -59,6 +59,7 @@ The current API and framework isn't compatible with every version of Node.
 ### Possible Solutions:
 - Downgrade the Node version to v16.20.2 (detailed in https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
 - **This will require further investigation.**
+https://github.com/hack4impact-mcgill/Greenpeace/issues/20
 
 ---
 
