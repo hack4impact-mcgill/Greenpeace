@@ -22,6 +22,20 @@ function Map() {
             defaultCenter={{ lat: 45.5048, lng: -73.5772}}
             options={{ styles: mapStyles }}
         >
+            // marker for OAP
+            <Marker
+                position={({ lat: 45.5043, lng: -73.5769})}
+                onClick={() => {
+                    console.log("Clicked.")
+                }}
+                label={("OAP label!!!")}
+            ></Marker>
+
+            // marker for mccord museum
+            <Marker
+                position={({lat: 45.5043, lng: -73.5734})}
+            ></Marker>
+
             {pins.map(pin => (
                 <Marker
                 key={ pin.id }
