@@ -64,3 +64,5 @@ https://github.com/hack4impact-mcgill/Greenpeace/issues/20
 ---
 
 Feel free to add any other issue, or let the leads know!
+
+add pin
