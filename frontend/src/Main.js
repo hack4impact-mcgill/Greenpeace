@@ -15,7 +15,6 @@ import { PinContext } from "./contexts"
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
     const { pins, setPins } = useContext(PinContext);
-    console.log(setPins)
     return (
         <GoogleMap
             defaultZoom={19}
