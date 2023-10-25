@@ -21,6 +21,20 @@ class PinController {
       ? response.status(200).send(dto)
       : response.status(404).send(dto);
   }
+
+  @Get('/id')
+  async getByID(@Response() response: ExpressResponse, pin_ID: string) {
+    const result: PinDto = await this.service.findUnique(pin_ID)
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error '} as PinResponseDto)
+
+    return result
+    ? response.status(200).send(dto)
+    : response.status(404).send(dto);
+  }
+
 }
 
 export { PinController };

@@ -8,6 +8,14 @@ class PinService {
   async findMany() {
     return await this.prisma.pin.findMany();
   }
+
+  async findUnique(pin_ID: string) {
+    return await this.prisma.pin.findUnique({
+      where: {
+        name: pin_ID
+      }
+    })
+  }
 }
 
 export default PinService;
