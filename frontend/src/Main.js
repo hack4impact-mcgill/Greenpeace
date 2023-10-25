@@ -22,7 +22,7 @@ function Map() {
             defaultCenter={{ lat: 45.5048, lng: -73.5772}}
             options={{ styles: mapStyles }}
         >
-            // marker for OAP
+            // hardcoded marker for OAP
             <Marker
                 position={({ lat: 45.5043, lng: -73.5769})}
                 onClick={() => {
@@ -31,7 +31,7 @@ function Map() {
                 label={("OAP label!!!")}
             ></Marker>
 
-            // marker for mccord museum
+            // hardcoded marker for mccord museum
             <Marker
                 position={({lat: 45.5043, lng: -73.5734})}
             ></Marker>
