@@ -22,22 +22,29 @@ function Map() {
             defaultCenter={{ lat: 45.5048, lng: -73.5772}}
             options={{ styles: mapStyles }}
         >
-            {pins.map(pin => (
-                <Marker
-                key={ pin.id }
+            {selectedPin && (
+                <InfoWindow
+                onCloseClick={() => {
+                    setSelectedPin(null);
+                }}
                 position={{
-                    lat: pin.coordinates[0],
-                    lng: pin.coordinates[1]
+                    lat: selectedPin.coordinates[0],
+                    lng: selectedPin.coordinates[1]
                 }}
-                onClick={() => {
-                    setSelectedPin(pin);
-                }}
-                icon={{
-                    url:  "https://img.icons8.com/color/48/000000/map-pin.png",
-                    scaledSize: new window.google.maps.Size(50, 50)
-                }}
-                />
-            ))}
+                justify="center"
+                >
+                    <div>
+                        <h2>{selectedPin.location}</h2>
+                        <p>{selectedPin.description}</p>
+                        <Link
+                            component="button"
+                            variant="body2"
+                            onClick={() => {}}
+                        >
+                            Expand
+                        </Link>
+                    </div>
+                </Info
 
             {selectedPin && (
                 <InfoWindow
