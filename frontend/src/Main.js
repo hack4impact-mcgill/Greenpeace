@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { HashRouter } from "react-router-dom";
 import { Button, Link } from "@material-ui/core"
+import CreatePinModal from "./components/CreatePinModal";
 
 import {
     withScriptjs,
@@ -109,6 +110,7 @@ export default function Main() {
                 mapElement={<div style={{ height: `100%` }} />}
                 style={{ zIndex: -1 }}
             />
+            <CreatePinModal/>
             <Button 
                 color="primary" 
                 variant="contained" 
@@ -119,7 +121,7 @@ export default function Main() {
                     right: "12vh"
                 }} 
             >Filter</Button>
-            <Button 
+            {/* <Button 
                 color="primary" 
                 variant="contained" 
                 style={{ 
@@ -134,7 +136,7 @@ export default function Main() {
                     fontWeight: "300" 
                 }} 
                 onClick={handleAddPin}
-            >+</Button>
+            >+</Button> */}
             </div>
         </HashRouter>
         </PinContext.Provider>
