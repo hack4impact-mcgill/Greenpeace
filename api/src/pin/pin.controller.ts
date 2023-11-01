@@ -25,9 +25,9 @@ class PinController {
   @Get('/:id')
   async getByID(
     @Response() response: ExpressResponse,
-    @Params('id') id: number
+    @Params('id') id: string
   ) {
-    const result: PinDto | null = await this.service.findUnique(id);
+    const result: PinDto | null = await this.service.findUnique(Number(id));
 
     const dto: PinResponseDto = result
       ? ({ status: 'Success', pin: result } as PinResponseDto)
