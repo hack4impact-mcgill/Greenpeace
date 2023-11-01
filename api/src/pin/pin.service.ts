@@ -9,12 +9,12 @@ class PinService {
     return await this.prisma.pin.findMany();
   }
 
-  async findUnique(pin_ID: string) {
+  async findUnique(id: number) {
     return await this.prisma.pin.findUnique({
       where: {
-        name: pin_ID
-      }
-    })
+        id: id,
+      },
+    });
   }
 }
 
