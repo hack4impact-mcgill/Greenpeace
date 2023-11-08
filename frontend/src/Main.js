@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { HashRouter } from "react-router-dom";
 import { Button, Link } from "@material-ui/core"
 
@@ -13,7 +13,7 @@ import mapStyles from './mapStyles';
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
-    const [pins, setPins] = useState([])
+    const [pins] = useState([])
 
     return (
         <GoogleMap
@@ -68,11 +68,6 @@ function Map() {
 
 const MapWrapped = withScriptjs(withGoogleMap(Map));
 const API_KEY = process.env.REACT_APP_API_KEY;
-
-function getRandomInRange(from, to, fixed) {
-    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
-    // .toFixed() returns string, so ' * 1' is a trick to convert to number
-}
 
 export default function Main() {
     const [ isListening, setIsListening ] = useState(false);
