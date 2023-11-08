@@ -9,6 +9,7 @@ export interface ManyPinResponseDto {
 }
 
 export interface PinDto {
+  id: number;
   name: string;
   description?: string;
   coordinateX: number;
