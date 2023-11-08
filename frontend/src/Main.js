@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { HashRouter } from "react-router-dom";
 import { Button, Link } from "@material-ui/core"
 
@@ -10,12 +10,11 @@ import {
     InfoWindow,
 } from "react-google-maps";
 import mapStyles from './mapStyles';
-import { PinContext } from "./contexts"
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
-    const { pins, setPins } = useContext(PinContext);
-    console.log(setPins)
+    const [pins, setPins] = useState([])
+
     return (
         <GoogleMap
             defaultZoom={19}
@@ -76,31 +75,35 @@ function getRandomInRange(from, to, fixed) {
 }
 
 export default function Main() {
-    const [ count, setCount ] = useState(2);
-    const [ pins, setPins ] = useState([]);
-    const value = { pins, setPins };
+    const [ isListening, setIsListening ] = useState(false);
+    const [ mapOpacity, setMapOpacity ] = useState(1) 
 
-    const handleAddPin = () => {
-        // generate pin with random latitude and longitude
-        const latitude = getRandomInRange(45, 46, 4);
-        const longitude = getRandomInRange(-73, -74, 4);
-        
-        const newPin = {
-            id: count,
-            coordinates: [latitude, longitude],
-            location: "New place",
-            description: "Description"
-        };
-        setCount(count + 1);
-        setPins([...pins, newPin]);
-        console.log("Added new pin with coordinates: ", latitude, longitude);
-        console.log(pins)
+    useEffect(() => {
+        if (isListening) {
+            window.addEventListener('mousedown', handleCreatePin)
+
+            // Set a timeout to stop listening after 10 seconds
+            const timer = setTimeout(() => {
+                setIsListening(false)
+                setMapOpacity(1)
+            }, 10000);
+
+            // Cleanup function to remove the event listener
+            return () => {
+                window.removeEventListener('mousedown', handleCreatePin)
+                clearTimeout(timer)
+            };
+        }
+
+    }, [isListening])
+
+    const handleCreatePin = (event) => {
+        console.log(event)
     }
 
     return (
-        <PinContext.Provider value={value}>
         <HashRouter>
-            <div style={{ width: "97vw", height: "100vh" }}>
+            <div style={{ width: "97vw", height: "100vh", opacity: mapOpacity }}>
 
             <MapWrapped
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
@@ -133,10 +136,12 @@ export default function Main() {
                     borderRadius: "50px", 
                     fontWeight: "300" 
                 }} 
-                onClick={handleAddPin}
+                onClick={() => {
+                    setIsListening(true)
+                    setMapOpacity(0.5)
+                }}
             >+</Button>
             </div>
         </HashRouter>
-        </PinContext.Provider>
     );
 }
