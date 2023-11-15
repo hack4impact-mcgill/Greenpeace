@@ -1,5 +1,12 @@
 import { Injectable } from '@decorators/di';
-import { Controller, Get, Params, Response } from '@decorators/express';
+import {
+  Body,
+  Controller,
+  Get,
+  Params,
+  Put,
+  Response,
+} from '@decorators/express';
 import { Response as ExpressResponse } from 'express';
 import PinService from './pin.service';
 import { ManyPinResponseDto, PinDto, PinResponseDto } from './pin.dto';
@@ -23,7 +30,7 @@ class PinController {
   }
 
   @Get('/:id')
-  async getByID(
+  async getById(
     @Response() response: ExpressResponse,
     @Params('id') id: string
   ) {
@@ -32,6 +39,23 @@ class PinController {
     const dto: PinResponseDto = result
       ? ({ status: 'Success', pin: result } as PinResponseDto)
       : ({ status: 'Error ' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(404).send(dto);
+  }
+
+  @Put('/:id')
+  async update(
+    @Response() response: ExpressResponse,
+    @Params('id') id: number,
+    @Body('pin') pin: Partial<PinDto>
+  ) {
+    const result: PinDto | null = await this.service.update(id, pin);
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error' } as PinResponseDto);
 
     return result
       ? response.status(200).send(dto)

@@ -1,5 +1,6 @@
 import { Injectable } from '@decorators/di';
 import { PrismaClient } from '@prisma/client';
+import { PinDto } from './pin.dto';
 
 @Injectable()
 class PinService {
@@ -13,6 +14,17 @@ class PinService {
     return await this.prisma.pin.findUnique({
       where: {
         id: id,
+      },
+    });
+  }
+
+  async update(id: number, pin: Partial<PinDto>) {
+    return await this.prisma.pin.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...pin,
       },
     });
   }
