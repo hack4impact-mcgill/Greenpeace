@@ -18,7 +18,7 @@ class PinService {
     });
   }
 
-  async createUnique(pin: PinDto) {
+  async create(pin: PinDto) {
     return await this.prisma.pin.create({
       data: {
         name: pin.name,
