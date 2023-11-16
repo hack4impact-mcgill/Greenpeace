@@ -16,6 +16,6 @@ model Pin {
   description  String
   coordinateX  Float
   coordinateY  Float
-  isVaid       Boolean  @default(true)
+  isValid       Boolean  @default(true)
   createdAt    DateTime @default(now())
 }

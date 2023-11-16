@@ -18,6 +18,27 @@ class PinService {
     });
   }
 
+  async create(pin: PinDto) {
+    return await this.prisma.pin.create({
+      data: {
+        name: pin.name,
+        description: String(pin.description),
+        coordinateX: pin.coordinateX,
+        coordinateY: pin.coordinateY,
+        isValid: pin.isValid,
+        createdAt: pin.createdAt,
+      },
+    });
+  }
+
+  async remove(id: number) {
+    return await this.prisma.pin.delete({
+      where: {
+        id: id,
+      },
+    });
+  }
+
   async update(id: number, pin: Partial<PinDto>) {
     return await this.prisma.pin.update({
       where: {
