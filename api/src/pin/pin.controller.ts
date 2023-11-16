@@ -21,7 +21,7 @@ class PinController {
       ? response.status(200).send(dto)
       : response.status(404).send(dto);
   }
-  
+
   @Get('/:id')
   async getByID(
     @Response() response: ExpressResponse,
@@ -37,19 +37,18 @@ class PinController {
       ? response.status(200).send(dto)
       : response.status(404).send(dto);
   }
-  
-  @Delete('/:id') 
-    async deleteById(@Response() response: ExpressResponse, id: string) {
-      const result: PinDto = await this.service.remove(Number(id));
 
-      const dto: PinResponseDto = result
-        ? ({ status: 'Success', pin: result } as PinResponseDto)
-        : ({ status: 'Error'} as PinResponseDto);
+  @Delete('/:id')
+  async deleteById(@Response() response: ExpressResponse, id: string) {
+    const result: PinDto = await this.service.remove(Number(id));
 
-        return result 
-        ? response.status(200).send(dto)
-        : response.status(404).send(dto);
-    }
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(404).send(dto);
   }
 }
 

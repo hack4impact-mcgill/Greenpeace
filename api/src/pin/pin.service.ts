@@ -8,7 +8,7 @@ class PinService {
   async findMany() {
     return await this.prisma.pin.findMany();
   }
-    
+
   async findUnique(id: number) {
     return await this.prisma.pin.findUnique({
       where: {
@@ -20,9 +20,10 @@ class PinService {
   async remove(id: number) {
     return await this.prisma.pin.delete({
       where: {
-        id: id
-      }
-    })
+        id: id,
+      },
+    });
+  }
 }
-  
+
 export default PinService;
