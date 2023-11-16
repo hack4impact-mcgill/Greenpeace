@@ -1,5 +1,13 @@
 import { Injectable } from '@decorators/di';
-import { Controller, Delete, Get, Response, Params } from '@decorators/express';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Params,
+  Post,
+  Response,
+} from '@decorators/express';
 import { Response as ExpressResponse } from 'express';
 import PinService from './pin.service';
 import { ManyPinResponseDto, PinDto, PinResponseDto } from './pin.dto';
@@ -36,6 +44,19 @@ class PinController {
     return result
       ? response.status(200).send(dto)
       : response.status(404).send(dto);
+  }
+
+  @Post('/')
+  async createPin(@Response() response: ExpressResponse, @Body() pin: PinDto) {
+    const result: PinDto | null = await this.service.createUnique(pin);
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error ' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(500).send(dto);
   }
 
   @Delete('/:id')
