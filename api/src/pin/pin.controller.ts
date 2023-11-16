@@ -6,6 +6,7 @@ import {
   Get,
   Params,
   Post,
+  Put,
   Response,
 } from '@decorators/express';
 import { Response as ExpressResponse } from 'express';
@@ -60,6 +61,23 @@ class PinController {
     return result
       ? response.status(200).send(dto)
       : response.status(500).send(dto);
+  }
+
+  @Put('/:id')
+  async update(
+    @Response() response: ExpressResponse,
+    @Params('id') id: number,
+    @Body('pin') pin: Partial<PinDto>
+  ) {
+    const result: PinDto | null = await this.service.update(id, pin);
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(404).send(dto);
   }
 
   @Delete('/:id')

@@ -38,6 +38,17 @@ class PinService {
       },
     });
   }
+
+  async update(id: number, pin: Partial<PinDto>) {
+    return await this.prisma.pin.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...pin,
+      },
+    });
+  }
 }
 
 export default PinService;
