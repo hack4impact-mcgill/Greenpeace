@@ -20,7 +20,7 @@ function Map() {
         setPins([...pins, {
             id: pins.length,
             coordinates: coordinates,
-            location: location,
+            location: name,
             description: description
         }])
     }
