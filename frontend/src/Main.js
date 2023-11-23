@@ -16,7 +16,7 @@ function Map() {
     const [pins, setPins] = useState([]);
     const [isListening, setIsListening] = useState(false);
 
-    const createPin = (coordinates, location, description) => {
+    const createPin = (coordinates, name, description) => {
         setPins([...pins, {
             id: pins.length,
             coordinates: coordinates,
