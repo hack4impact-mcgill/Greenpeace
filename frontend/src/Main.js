@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { HashRouter } from "react-router-dom";
 import { Button, Link } from "@material-ui/core"
 
@@ -13,13 +13,30 @@ import mapStyles from './mapStyles';
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
-    const [pins] = useState([])
+    const [pins, setPins] = useState([]);
+    const [isListening, setIsListening] = useState(false);
+
+    const createPin = (coordinates, location, description) => {
+        setPins([...pins, {
+            id: pins.length,
+            coordinates: coordinates,
+            location: location,
+            description: description
+        }])
+    }
 
     return (
         <GoogleMap
             defaultZoom={19}
             defaultCenter={{ lat: 45.5048, lng: -73.5772}}
-            options={{ styles: mapStyles }}
+            options={{styles: mapStyles}}
+            onClick={( event ) => {
+                if (isListening) {
+                    createPin([event.latLng.lat(), event.latLng.lng()], "New Pin", "New Description");
+                    setIsListening(false);
+                    }
+                }
+            }
         >
             {pins.map(pin => (
                 <Marker
@@ -32,8 +49,7 @@ function Map() {
                     setSelectedPin(pin);
                 }}
                 icon={{
-                    url:  "https://img.icons8.com/color/48/000000/map-pin.png",
-                    scaledSize: new window.google.maps.Size(50, 50)
+                    scaledSize: new window.google.maps.Size(70, 70)
                 }}
                 />
             ))}
@@ -62,51 +78,7 @@ function Map() {
                     </div>
                 </InfoWindow>
             )}
-        </GoogleMap>
-    );
-}
 
-const MapWrapped = withScriptjs(withGoogleMap(Map));
-const API_KEY = process.env.REACT_APP_API_KEY;
-
-export default function Main() {
-    const [ isListening, setIsListening ] = useState(false);
-    const [ mapOpacity, setMapOpacity ] = useState(1) 
-
-    useEffect(() => {
-        if (isListening) {
-            window.addEventListener('mousedown', handleCreatePin)
-
-            // Set a timeout to stop listening after 10 seconds
-            const timer = setTimeout(() => {
-                setIsListening(false)
-                setMapOpacity(1)
-            }, 10000);
-
-            // Cleanup function to remove the event listener
-            return () => {
-                window.removeEventListener('mousedown', handleCreatePin)
-                clearTimeout(timer)
-            };
-        }
-
-    }, [isListening])
-
-    const handleCreatePin = (event) => {
-        console.log(event)
-    }
-
-    return (
-        <HashRouter>
-            <div style={{ width: "97vw", height: "100vh", opacity: mapOpacity }}>
-
-            <MapWrapped
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                loadingElement={<div style={{ height: `95%` }} />}
-                containerElement={<div style={{ height: `95%` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-                style={{ zIndex: -1 }}
-            />
             <Button 
                 color="primary" 
                 variant="contained" 
@@ -132,10 +104,29 @@ export default function Main() {
                     fontWeight: "300" 
                 }} 
                 onClick={() => {
-                    setIsListening(true)
-                    setMapOpacity(0.5)
+                    setIsListening(true);
                 }}
             >+</Button>
+        </GoogleMap>
+    );
+}
+
+const MapWrapped = withScriptjs(withGoogleMap(Map));
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+export default function Main() {
+
+    return (
+        <HashRouter>
+            <div style={{ width: "97vw", height: "100vh" }}>
+
+            <MapWrapped
+                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
+                loadingElement={<div style={{ height: `95%` }} />}
+                containerElement={<div style={{ height: `95%` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+                style={{ zIndex: -1 }}
+            />
             </div>
         </HashRouter>
     );
