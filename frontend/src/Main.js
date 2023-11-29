@@ -10,6 +10,7 @@ import {
     InfoWindow,
 } from "react-google-maps";
 import mapStyles from './mapStyles';
+import FormModal from "./FormModal";
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
@@ -117,7 +118,8 @@ export default function Main() {
                     right: "12vh"
                 }} 
             >Filter</Button>
-            <Button 
+            <FormModal/>
+            {/* <Button 
                 color="primary" 
                 variant="contained" 
                 style={{ 
@@ -135,7 +137,7 @@ export default function Main() {
                     setIsListening(true)
                     setMapOpacity(0.5)
                 }}
-            >+</Button>
+            >+</Button> */}
             </div>
         </HashRouter>
     );
