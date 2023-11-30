@@ -40,21 +40,29 @@ export default function FormModal() {
     const handleReviewChange = (event) => { setReview(event.target.value); }
 
     const handlePreview = (event) => {
-        console.log(name)
-        console.log(address)
-        console.log(category)
-        console.log(description)
-        console.log(review)
-
-    };
-
-    const handlePublish = (event) => {
+        // TODO: show what the pin would look like on the map with the properties open (first figure out form validation)
         console.log(name)
         console.log(address)
         console.log(category)
         console.log(description)
         console.log(review)
         setOpen(false);
+    };
+
+    // publish adds the pin to board, adds info to database, and clears the popup menu
+    const handlePublish = (event) => {
+        // TODO: add the properties of the pin to a database after publishing
+        console.log(name)
+        console.log(address)
+        console.log(category)
+        console.log(description)
+        console.log(review)
+        setOpen(false);
+        setAddress('');
+        setCategory('');
+        setDescription('');
+        setName('');
+        setReview('');
     };
 
     return (
@@ -83,10 +91,10 @@ export default function FormModal() {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Share more about this sustainable spot!
+                        Create a pin
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Fill in the following information for the given point.
+                        Share more about this sustainable spot!
                     </Typography>
                     <Box
                         component="form"
@@ -108,6 +116,7 @@ export default function FormModal() {
                                 margin="normal"
                                 onChange={handleNameChange}
                                 value={name}
+                                required
                             />
                         </div>
                         <div>
@@ -119,6 +128,7 @@ export default function FormModal() {
                                 margin="normal"
                                 onChange={handleAddressChange}
                                 value={address}
+                                required
                             />
                         </div>
                         <div>
@@ -130,6 +140,7 @@ export default function FormModal() {
                                     value={category}
                                     label="Category"
                                     onChange={handleCategoryChange}
+                                    required
                                 >
                                     <MenuItem value={'General Store'}>General Store</MenuItem>
                                     <MenuItem value={'Clothes'}>Clothes</MenuItem>
