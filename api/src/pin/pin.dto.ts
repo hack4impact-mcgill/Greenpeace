@@ -17,14 +17,5 @@ export interface PinDto {
   isValid?: boolean;
   createdAt: Date;
   category: string;
-  reactions: Reaction[];
-}
-
-enum Reaction {
-  LIKE,
-  DISLIKE,
-  SUSTAINABLE,
-  STORE_UNAVAILABLE,
-  GOOD_VALUE,
-  BAD_VALUE
+  reactions?: string[];
 }
