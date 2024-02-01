@@ -8,6 +8,9 @@ const LoginSignup =  () => {
     const [action, setAction] = useState("Login");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorPassword, setErrorPassword] = useState(false);
+    const [errorEmail, setErrorEmail] = useState(false);
+
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -20,8 +23,23 @@ const LoginSignup =  () => {
     const handleLoginSignup = () => {
         //console.log(email);
         //console.log(password); 
-        setEmail('');
-        setPassword('');
+        if (email.trim() !== "" && password.trim() !== ""){
+            setEmail('');
+            setErrorEmail(false);
+            setPassword('');
+            setErrorPassword(false);
+        } else {
+            if (email.trim() === "" && password.trim() !== ""){
+                setErrorEmail(true);
+                setErrorPassword(false);
+            } else if (password.trim() === "" && email.trim() !== "") {
+                setErrorEmail(false);
+                setErrorPassword(true);
+            }else {
+                setErrorEmail(true);
+                setErrorPassword(true);
+            }
+        }
     };
 
 
@@ -35,12 +53,15 @@ const LoginSignup =  () => {
                     <TextField fullWidth id="email-input" label="Email" variant="outlined" 
                         value={email}
                         onChange={handleEmailChange}
+                        error={Boolean(errorEmail)} 
                     />
                 </div>
                 <div className="input">
                     <TextField fullWidth id="password-input" label="Password" variant="outlined" 
                         value={password}
                         onChange={handlePasswordChange}
+                        error={Boolean(errorPassword)} 
+
                     />
                 </div>
             </div>
