@@ -19,14 +19,6 @@ const useStyles = makeStyles({
     paddingLeft: 20
   },
 
-  // changeLogTitle: {
-  //   color: '#ffffff', // Set color to white
-  //   fontFamily: 'Roboto', // Set font family to Roboto
-  //   fontSize: '1.5rem', // Adjust font size as needed
-  //   fontWeight: 400, // Adjust font weight as needed
-  //   margin: 0, // Remove default margin
-  // },
-
 });
 
 export default function ChangeLog() {
@@ -34,6 +26,7 @@ export default function ChangeLog() {
   const [state, setState] = React.useState({
     left: false,
   });
+  const [pins, setPins] = React.useState([]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -44,6 +37,16 @@ export default function ChangeLog() {
       return;
     }
     setState({ ...state, left: open });
+    setTimeout(() => {
+      // Assuming 'pinsData' is fetched from an API or somewhere else
+      const pinsData = [
+        { id: 1, date: "2024-01-01", name: "Pin 1" },
+        { id: 2, date: "2024-01-02", name: "Pin 2" },
+        { id: 3, date: "2024-01-03", name: "Pin 3" }
+        // Add more pin data as needed
+      ];
+      setPins(pinsData);
+    }, 1000);
   };
 
   return (
@@ -60,6 +63,9 @@ export default function ChangeLog() {
             <Typography style={{ color: "white" }}>
               Change Log            </Typography>
           </div>
+          {pins.map((pin) => (
+            <PinCard key={pin.id} date={pin.date} name={pin.name} />
+          ))}
         </div>
       </SwipeableDrawer>
     </div>
