@@ -9,13 +9,13 @@ export interface ManyPinResponseDto {
 }
 
 export interface PinDto {
-  id: number;
+  id?: number;
   name: string;
   description?: string;
   coordinateX: number;
   coordinateY: number;
   isValid?: boolean;
-  createdAt: Date;
+  createdAt?: Date;
   category: string;
   reactions?: string[];
 }

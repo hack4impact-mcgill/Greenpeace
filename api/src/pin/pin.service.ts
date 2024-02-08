@@ -7,6 +7,8 @@ class PinService {
   constructor(private readonly prisma: PrismaClient) {}
 
   async findMany() {
+    // console.log('here at service')
+    // this.prisma.pin.findMany().then(pin => console.log(pin)).catch(err => console.log(err))
     return await this.prisma.pin.findMany();
   }
 
