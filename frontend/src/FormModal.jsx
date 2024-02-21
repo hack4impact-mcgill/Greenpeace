@@ -56,15 +56,20 @@ export default function FormModal() {
     const handleReviewChange = (event) => { setReview(event.target.value); }
 
     const handlePreview = (event) => {
-        // TODO: show what the pin would look like on the map with the properties open (first figure out form validation)
         if (name === "") {
             setNameError(true);
+        } else {
+            setNameError(false);
         }
         if (address === "") {
             setAddressError(true);
+        } else {
+            setAddressError(false);
         }
         if (category === "") {
             setSelectColor("secondary");
+        } else {
+            setSelectColor("primary");
         }
 
         if (name !== "" && address !== "" && category !== "") {
@@ -80,13 +85,6 @@ export default function FormModal() {
         } else {
             setValidatePreview(false);
         }
-
-        // console.log(name)
-        // console.log(address)
-        // console.log(category)
-        // console.log(description)
-        // console.log(review)
-        // setOpen(false);
     };
     // publish adds the pin to board, adds info to database, and clears the popup menu
     const handlePublish = (event) => {
@@ -231,7 +229,7 @@ export default function FormModal() {
                                 color="primary"
                                 variant="contained"
                                 onClick={handlePreview}
-                            >Preview</Button>
+                            >Preview your pin</Button>
                             <Button
                                 color="primary"
                                 variant="contained"
