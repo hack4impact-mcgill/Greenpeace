@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select, { } from '@material-ui/core/Select';
+import { FormHelperText } from '@material-ui/core';
 import './styles.css'
 
 const style = {
@@ -22,13 +23,28 @@ const style = {
     p: 4,
 };
 
+// export const FormModal = React.createClass({
+//     getInitialState () {
+//         return {
+
+//         }
+//     },
+
+// })
+
 export default function FormModal() {
+
     const [open, setOpen] = React.useState(false);
     const [category, setCategory] = React.useState('');
     const [name, setName] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [review, setReview] = React.useState('');
+
+    const [nameError, setNameError] = React.useState(false);
+    const [addressError, setAddressError] = React.useState(false);
+    const [validatePreview, setValidatePreview] = React.useState(false);
+    const [selectColor, setSelectColor] = React.useState("primary");
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -41,28 +57,54 @@ export default function FormModal() {
 
     const handlePreview = (event) => {
         // TODO: show what the pin would look like on the map with the properties open (first figure out form validation)
-        console.log(name)
-        console.log(address)
-        console.log(category)
-        console.log(description)
-        console.log(review)
-        setOpen(false);
-    };
+        if (name === "") {
+            setNameError(true);
+        }
+        if (address === "") {
+            setAddressError(true);
+        }
+        if (category === "") {
+            setSelectColor("secondary");
+        }
 
+        if (name !== "" && address !== "" && category !== "") {
+            console.log(name)
+            console.log(address)
+            console.log(category)
+            console.log(description)
+            console.log(review)
+            setValidatePreview(true);
+            setNameError(false);
+            setAddressError(false);
+            setSelectColor("primary");
+        } else {
+            setValidatePreview(false);
+        }
+
+        // console.log(name)
+        // console.log(address)
+        // console.log(category)
+        // console.log(description)
+        // console.log(review)
+        // setOpen(false);
+    };
     // publish adds the pin to board, adds info to database, and clears the popup menu
     const handlePublish = (event) => {
         // TODO: add the properties of the pin to a database after publishing
-        console.log(name)
-        console.log(address)
-        console.log(category)
-        console.log(description)
-        console.log(review)
-        setOpen(false);
-        setAddress('');
-        setCategory('');
-        setDescription('');
-        setName('');
-        setReview('');
+        if (validatePreview) {
+            console.log(name)
+            console.log(address)
+            console.log(category)
+            console.log(description)
+            console.log(review)
+            setOpen(false);
+            setAddress('');
+            setCategory('');
+            setDescription('');
+            setName('');
+            setReview('');
+        }
+        setValidatePreview(false);
     };
 
     return (
@@ -117,7 +159,10 @@ export default function FormModal() {
                                 onChange={handleNameChange}
                                 value={name}
                                 required
+                                error={nameError}
                             />
+                            <FormHelperText>Required</FormHelperText>
+
                         </div>
                         <div>
                             <TextField
@@ -129,7 +174,10 @@ export default function FormModal() {
                                 onChange={handleAddressChange}
                                 value={address}
                                 required
+                                error={addressError}
                             />
+                            <FormHelperText>Required</FormHelperText>
+
                         </div>
                         <div>
                             <FormControl fullWidth>
@@ -141,6 +189,7 @@ export default function FormModal() {
                                     label="Category"
                                     onChange={handleCategoryChange}
                                     required
+                                    color={selectColor}
                                 >
                                     <MenuItem value={'General Store'}>General Store</MenuItem>
                                     <MenuItem value={'Clothes'}>Clothes</MenuItem>
@@ -148,6 +197,7 @@ export default function FormModal() {
                                     <MenuItem value={'Restaurant'}>Restaurant</MenuItem>
                                     <MenuItem value={'Others'}>Others</MenuItem>
                                 </Select>
+                                <FormHelperText>Required</FormHelperText>
                             </FormControl>
                         </div>
                         <div>
