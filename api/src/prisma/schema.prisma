@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:app.db"
+  provider = "postgresql"
+  url      = "postgresql://greenpeace@127.0.0.1:5432/greenpeace"
 }
 
 model Pin {
@@ -16,6 +16,8 @@ model Pin {
   description  String
   coordinateX  Float
   coordinateY  Float
-  isValid       Boolean  @default(true)
+  isValid      Boolean  @default(true)
   createdAt    DateTime @default(now())
+  category     String   @default("")
+  reactions    String[]
 }
