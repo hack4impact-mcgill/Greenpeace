@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import RoomIcon from '@material-ui/icons/Room';
 
-const PinCard = ({ date, name }) => {
+const PinCard = ({ date, name, category }) => {
   return (
     <Card variant="outlined">
       <CardHeader 
@@ -23,7 +23,7 @@ const PinCard = ({ date, name }) => {
             <MoreVertIcon/>
           </IconButton>
           }
-          title="ADDED PIN"
+          title={category}
         />
       <CardContent>
         <Typography variant="h5" component="h2">
