@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import InputBase from '@material-ui/core/InputBase';
 import FormControl from '@material-ui/core/FormControl';
@@ -9,8 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import PinCard from './PinCard';
+import { PinDataContext } from './context/PinDataContext';
 
 
 const useStyles = makeStyles({
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
   },
   searchBar: {
     width: '70%',
-    margin: '20px auto',
+    margin: '20px 50px',
     display: 'flex',
     alignItems: 'center',
     padding: 10,
@@ -42,11 +43,11 @@ const useStyles = makeStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  select: {
-    width: '70%',
-    margin: '20px auto',
+  selectMenu: {
+    width: '45%',
+    margin: '20px 50px',
     display: 'flex',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+    boxShadow: '0 2px 30px rgba(0,0,0,0.1)',
   }
 });
 
@@ -60,31 +61,15 @@ export default function ChangeLog() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
 
-  useEffect(() => {
-    // Simulate fetching data
-    const fetchData = async () => {
-      // Simulated data fetch
-      const pinData = [
-        { id: 1, date: "2024-01-01", name: "Grocery Store", category: "General Store"},
-        { id: 2, date: "2024-01-02", name: "Mandy's", category: "Restaurant"},
-        { id: 3, date: "2024-01-03", name: "Mont Royal", category: "Park"},
-        { id: 4, date: "2024-01-01", name: "Snack Store", category: "General Store"},
-        { id: 5, date: "2024-01-02", name: "Food Quarter", category: "Restaurant"},
-        { id: 6, date: "2024-01-03", name: "Central Park", category: "Park"},
-        // Add more data as needed
-      ];
-      const categoryData = [
-        "General Store",
-        "Restaurant",
-        "Park",
-        // Add more categories as needed
-      ];
-      setPins(pinData);
-      setCategories(categoryData);
-    };
+  const pinData = useContext(PinDataContext);
 
-    fetchData();
-  }, []);
+  useEffect(() => {
+    if (pinData) {
+      setPins(pinData.pins);
+      setCategories(pinData.categories);
+    }
+
+  }, [pinData]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -126,19 +111,21 @@ export default function ChangeLog() {
             </Typography>
           </div>
           <div className={classes.searchBar}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search Change Log…"
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={handleSearchChange}
-              />
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search Change Log…"
+              inputProps={{ 'aria-label': 'search' }}
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
           </div>
-          <FormControl className={classes.select}>
-            <InputLabel id="category-label">Category</InputLabel>
+          <FormControl variant="outlined" className={classes.selectMenu}>
+            <InputLabel id="category-select-label">Filter</InputLabel>
             <Select
-              labelId="category-label"
+              label="Filter"
+              labelId="category-select-label"
               id="category-select"
               value={selectedCategory}
               onChange={handleCategoryChange}
@@ -146,8 +133,8 @@ export default function ChangeLog() {
               {/* Map over categories */}
               <MenuItem value="">All</MenuItem>
               {categories.map(category => (
-                <MenuItem value={category}>{category}</MenuItem>
-            ))}
+                <MenuItem key={category} value={category}>{category}</MenuItem>
+              ))}
             </Select>
           </FormControl>
           {filteredPins.map((pin) => (

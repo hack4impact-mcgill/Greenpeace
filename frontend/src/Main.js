@@ -11,6 +11,7 @@ import {
     InfoWindow,
 } from "react-google-maps";
 import mapStyles from './mapStyles';
+import { PinDataProvider } from "./context/PinDataContext";
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
@@ -81,7 +82,7 @@ function Map() {
             )}
 
             <Box style={{ position: "absolute", bottom: "30px", left: "30px", zIndex: 1 }}>
-                <ChangeLog/>
+                <ChangeLog />
             </Box>
 
             <Button
@@ -123,16 +124,18 @@ export default function Main() {
 
     return (
         <HashRouter>
-            <div style={{ width: "97vw", height: "100vh" }}>
+            <PinDataProvider>
+                <div style={{ width: "97vw", height: "100vh" }}>
 
-                <MapWrapped
-                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                    loadingElement={<div style={{ height: `95%` }} />}
-                    containerElement={<div style={{ height: `95%` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                    style={{ zIndex: -1 }}
-                />
-            </div>
+                    <MapWrapped
+                        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
+                        loadingElement={<div style={{ height: `95%` }} />}
+                        containerElement={<div style={{ height: `95%` }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        style={{ zIndex: -1 }}
+                    />
+                </div>
+            </PinDataProvider>
         </HashRouter>
     );
 }
