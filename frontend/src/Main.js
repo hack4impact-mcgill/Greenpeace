@@ -10,6 +10,7 @@ import {
     InfoWindow,
 } from "react-google-maps";
 import mapStyles from './mapStyles';
+import FormModal from "./FormModal";
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
@@ -23,6 +24,10 @@ function Map() {
             location: name,
             description: description
         }])
+    }
+
+    const onFormButtonClick = (name, descripton) => {
+        console.log("Form Preview Data:", name);
     }
 
     return (
@@ -89,24 +94,7 @@ function Map() {
                     right: "12vh"
                 }} 
             >Filter</Button>
-            <Button 
-                color="primary" 
-                variant="contained" 
-                style={{ 
-                    zIndex: 1, 
-                    marginTop: "-15vh", 
-                    position: "absolute", 
-                    right: "12vh", 
-                    height: "65px", 
-                    width: "50px", 
-                    fontSize: "60px", 
-                    borderRadius: "50px", 
-                    fontWeight: "300" 
-                }} 
-                onClick={() => {
-                    setIsListening(true);
-                }}
-            >+</Button>
+            <FormModal onFormButtonClick={onFormButtonClick}/>
         </GoogleMap>
     );
 }
