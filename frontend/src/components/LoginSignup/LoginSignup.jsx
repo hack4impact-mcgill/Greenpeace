@@ -14,10 +14,12 @@ const LoginSignup =  () => {
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
+        setErrorEmail(false);
     };
 
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
+        setErrorPassword(false);
     };
 
     const handleLoginSignup = () => {

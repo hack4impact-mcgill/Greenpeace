@@ -13,13 +13,30 @@ import mapStyles from './mapStyles';
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
-    const [pins] = useState([])
+    const [pins, setPins] = useState([]);
+    const [isListening, setIsListening] = useState(false);
+
+    const createPin = (coordinates, name, description) => {
+        setPins([...pins, {
+            id: pins.length,
+            coordinates: coordinates,
+            location: name,
+            description: description
+        }])
+    }
 
     return (
         <GoogleMap
             defaultZoom={19}
             defaultCenter={{ lat: 45.5048, lng: -73.5772}}
-            options={{ styles: mapStyles }}
+            options={{styles: mapStyles}}
+            onClick={( event ) => {
+                if (isListening) {
+                    createPin([event.latLng.lat(), event.latLng.lng()], "New Pin", "New Description");
+                    setIsListening(false);
+                    }
+                }
+            }
         >
             {pins.map(pin => (
                 <Marker
@@ -32,8 +49,7 @@ function Map() {
                     setSelectedPin(pin);
                 }}
                 icon={{
-                    url:  "https://img.icons8.com/color/48/000000/map-pin.png",
-                    scaledSize: new window.google.maps.Size(50, 50)
+                    scaledSize: new window.google.maps.Size(70, 70)
                 }}
                 />
             ))}

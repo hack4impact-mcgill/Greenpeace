@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+    database:
+        image: postgres
+        container_name: greenpeace-postgres
+        ports:
+            - 5432:5432
+        volumes:
+            - greenpeace-postgres-data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=greenpeace
+            - POSTGRES_PASSWORD=greenpeace
+            - POSTGRES_DATABASE=greenpeace
+        restart: unless-stopped
+    api:
+        build: api/
+        container_name: greenpeace-api
+        ports:
+            - 3000:3000
+        volumes:
+            - ./api/:/app/
+        environment:
+            - DATABASE_URL=postgresql://greenpeace:greenpeace@127.0.0.1:5432/greenpeace
+        restart: unless-stopped
+
+volumes:
+    greenpeace-postgres-data:

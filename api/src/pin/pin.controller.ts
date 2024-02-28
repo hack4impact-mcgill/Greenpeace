@@ -1,5 +1,14 @@
 import { Injectable } from '@decorators/di';
-import { Controller, Get, Params, Response } from '@decorators/express';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Params,
+  Post,
+  Put,
+  Response,
+} from '@decorators/express';
 import { Response as ExpressResponse } from 'express';
 import PinService from './pin.service';
 import { ManyPinResponseDto, PinDto, PinResponseDto } from './pin.dto';
@@ -23,7 +32,7 @@ class PinController {
   }
 
   @Get('/:id')
-  async getByID(
+  async getOne(
     @Response() response: ExpressResponse,
     @Params('id') id: string
   ) {
@@ -32,6 +41,55 @@ class PinController {
     const dto: PinResponseDto = result
       ? ({ status: 'Success', pin: result } as PinResponseDto)
       : ({ status: 'Error ' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(404).send(dto);
+  }
+
+  @Post('/')
+  async create(
+    @Response() response: ExpressResponse,
+    @Body('pin') pin: PinDto
+  ) {
+    const result: PinDto | null = await this.service.create(pin);
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(500).send(dto);
+  }
+
+  @Put('/:id')
+  async update(
+    @Response() response: ExpressResponse,
+    @Params('id') id: number,
+    @Body('pin') pin: Partial<PinDto>
+  ) {
+    const result: PinDto | null = await this.service.update(id, pin);
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error' } as PinResponseDto);
+
+    return result
+      ? response.status(200).send(dto)
+      : response.status(404).send(dto);
+  }
+
+  @Delete('/:id')
+  async delete(
+    @Response() response: ExpressResponse,
+    @Params('id') id: string
+  ) {
+    const result: PinDto = await this.service.remove(Number(id));
+
+    const dto: PinResponseDto = result
+      ? ({ status: 'Success', pin: result } as PinResponseDto)
+      : ({ status: 'Error' } as PinResponseDto);
 
     return result
       ? response.status(200).send(dto)
