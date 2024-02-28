@@ -23,15 +23,6 @@ const style = {
     p: 4,
 };
 
-// export const FormModal = React.createClass({
-//     getInitialState () {
-//         return {
-
-//         }
-//     },
-
-// })
-
 export default function FormModal() {
 
     const [open, setOpen] = React.useState(false);
@@ -104,6 +95,8 @@ export default function FormModal() {
         }
         setValidatePreview(false);
     };
+
+    //function 
 
     return (
         <div>
