@@ -69,15 +69,24 @@ class PinController {
     @Params('id') id: number,
     @Params('reaction') reaction: string
   ) {
+    console.log(id);
+    console.log(reaction);
+
     // find the pin
-    const result: PinDto | null = await this.service.findUnique(Number(id));
+    const result: Partial<PinDto> | null = await this.service.findUnique(Number(id));
 
     // if result is null
-    if (result) {
+    if (!result) {
       return response.status(404).send(({ status: 'Error' } as PinResponseDto));
     }
     else {
       result!!.reactions?.push(reaction)
+      // (for testing purposes as we're still working on this function)
+      // result!!.reactions?.push("like_test")
+
+      // update the pin and send success message
+      const new_pin: PinDto | null = await this.service.update(Number(id), result);
+      return response.status(200).send(({ status: 'Success', pin: new_pin} as PinResponseDto));
     }
   }
 
@@ -87,7 +96,7 @@ class PinController {
     @Params('id') id: number,
     @Body('pin') pin: Partial<PinDto>
   ) {
-    const result: PinDto | null = await this.service.update(id, pin);
+    const result: PinDto | null = await this.service.update(Number(id), pin);
 
     const dto: PinResponseDto = result
       ? ({ status: 'Success', pin: result } as PinResponseDto)
@@ -124,13 +133,14 @@ class PinController {
     const result: PinDto | null = await this.service.findUnique(Number(id));
 
     // if result is null
-    if (result) {
+    if (!result) {
       return response.status(404).send(({ status: 'Error' } as PinResponseDto));
     }
     else {
 
       // iterate through the pin's list of reactions
-      for (var cur_reaction in result!!.reactions) {
+      for (var reactions_index in result!!.reactions) {
+        var cur_reaction = result!!.reactions[Number(reactions_index)];
 
         // if reaction found
         if (cur_reaction == reaction) {
@@ -139,8 +149,15 @@ class PinController {
 
           // remove reaction at index "index" from reactions
           result!!.reactions.splice(index, 1)
+
+          // break for loop
+          break;
         }
       }
+
+      // update the pin and send success message
+      const new_pin: PinDto | null = await this.service.update(Number(id), result);
+      return response.status(200).send(({ status: 'Success', pin: new_pin} as PinResponseDto));
     }
   }
 }
