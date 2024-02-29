@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import './LoginSignup.css'
 import { TextField, Button } from "@material-ui/core/"
-import logo from '../assets/Greenpeace_logo.png';
+import logo from '../assets/Greenpeace_logo.png'
 
 const LoginSignup =  () => {
 
@@ -48,7 +48,7 @@ const LoginSignup =  () => {
     return (
         <div className="container">
             <div className="header">
-                <img src={logo} alt="Logo" />;
+                <img src={logo} alt="Logo" />
             </div>  
             <div className="inputs">
                 <div className="input">
