@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.4",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.11",
+    "@react-google-maps/api": "^2.19.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^7.2.1",
-    "google-maps-react": "^2.0.2",
-    "react": "^16.12.0",
-    "react-csv-downloader": "^1.5.0",
+    "react": "^18.2.0",
     "react-dev-utils": "^10.0.0",
-    "react-dom": "^16.12.0",
-    "react-google-maps": "^9.4.5",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0"
   },
@@ -38,6 +38,6 @@
     ]
   },
   "devDependencies": {
-    "react-csv-downloader": "^1.5.0"
+    "react-csv-downloader": "^3.1.0"
   }
 }
