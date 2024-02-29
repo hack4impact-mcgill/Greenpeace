@@ -3,18 +3,26 @@ import { HashRouter } from "react-router-dom";
 import { Button, Link } from "@mui/material";
 
 import {
-    withScriptjs,
-    withGoogleMap,
     GoogleMap,
     Marker,
     InfoWindow,
-} from "react-google-maps";
+    useJsApiLoader,
+} from "@react-google-maps/api";
 import mapStyles from './mapStyles';
+
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
     const [pins, setPins] = useState([]);
     const [isListening, setIsListening] = useState(false);
+    const [map, setMap] = useState(null);
+    const { isLoaded, loadError } = useJsApiLoader({
+        id: "google-map-script",
+        googleMapsApiKey: API_KEY,
+        libraries: ["places", "geometry", "drawing"],
+        version: "3.exp",
+    });
 
     const createPin = (coordinates, name, description) => {
         setPins([...pins, {
@@ -25,11 +33,26 @@ function Map() {
         }])
     }
 
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds();
+        map.fitBounds(bounds);
+        setMap(map);
+    });
+
+    const onUnmount = React.useCallback(function callback(map) {
+        setMap(null);
+    });
+
+    if (loadError) return <h1>{loadError}</h1>
+    if (!isLoaded) return <h1>Loading</h1>;
+
     return (
         <GoogleMap
             defaultZoom={19}
             defaultCenter={{ lat: 45.5048, lng: -73.5772}}
             options={{styles: mapStyles}}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
             onClick={( event ) => {
                 if (isListening) {
                     createPin([event.latLng.lat(), event.latLng.lng()], "New Pin", "New Description");
@@ -111,8 +134,7 @@ function Map() {
     );
 }
 
-const MapWrapped = withScriptjs(withGoogleMap(Map));
-const API_KEY = process.env.REACT_APP_API_KEY;
+const MapWrapped = Map;
 
 export default function Main() {
 

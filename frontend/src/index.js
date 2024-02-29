@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Main from "./Main"
 import './index.css';
 
-ReactDOM.render(
-  <Main/>, 
-  document.getElementById("root")
-);
+createRoot(document.getElementById("root")).render(
+  <Main />
+)
