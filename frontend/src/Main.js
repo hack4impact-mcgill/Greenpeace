@@ -69,24 +69,6 @@ function Map() {
                     <div style={{ width: "300px", height: "200px", padding: "20px" }}>
                         <h2>{selectedPin.location}</h2>
                         <p>{selectedPin.description}</p>
-                        {/* <Button
-                            color="primary"
-                            variant="contained"
-                            style={{
-                                zIndex: 1,
-                                // marginTop: "-1",
-                                position: "absolute",
-                                // right: "1vh",
-                                height: "65px",
-                                width: "5px",
-                                fontSize: "10px",
-                                borderRadius: "5px",
-                                fontWeight: "10"
-                            }}
-                            onClick={() => {
-                            }}
-
-                        >Expand</Button> */}
                         <FormModal/>
                     </div>
                 </InfoWindow>

@@ -100,22 +100,6 @@ export default function FormModal() {
 
     return (
         <div>
-            {/* <Button
-                color="secondary"
-                variant="contained"
-                style={{
-                    zIndex: 1,
-                    marginTop: "-15vh",
-                    position: "absolute",
-                    right: "12vh",
-                    height: "65px",
-                    width: "50px",
-                    fontSize: "60px",
-                    borderRadius: "50px",
-                    fontWeight: "300"
-                }}
-                onClick={handleOpen}
-            >+</Button> */}
             <Button
                 color="primary"
                 variant="contained"
