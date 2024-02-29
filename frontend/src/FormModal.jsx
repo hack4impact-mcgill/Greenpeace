@@ -100,7 +100,7 @@ export default function FormModal() {
 
     return (
         <div>
-            <Button
+            {/* <Button
                 color="secondary"
                 variant="contained"
                 style={{
@@ -115,7 +115,23 @@ export default function FormModal() {
                     fontWeight: "300"
                 }}
                 onClick={handleOpen}
-            >+</Button>
+            >+</Button> */}
+            <Button
+                color="primary"
+                variant="contained"
+                style={{
+                    zIndex: 1,
+                    // marginTop: "-1",
+                    position: "absolute",
+                    // right: "1vh",
+                    height: "65px",
+                    width: "5px",
+                    fontSize: "10px",
+                    borderRadius: "5px",
+                    fontWeight: "10"
+                }}
+                onClick={handleOpen}
+            >Expand</Button>
             <Modal
                 open={open}
                 onClose={handleClose}

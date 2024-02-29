@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HashRouter } from "react-router-dom";
-import { Button, Link } from "@material-ui/core"
+import { Button } from "@material-ui/core"
 
 import {
     withScriptjs,
@@ -10,6 +10,7 @@ import {
     InfoWindow,
 } from "react-google-maps";
 import mapStyles from './mapStyles';
+import FormModal from './FormModal';
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
@@ -28,85 +29,88 @@ function Map() {
     return (
         <GoogleMap
             defaultZoom={19}
-            defaultCenter={{ lat: 45.5048, lng: -73.5772}}
-            options={{styles: mapStyles}}
-            onClick={( event ) => {
+            defaultCenter={{ lat: 45.5048, lng: -73.5772 }}
+            options={{ styles: mapStyles }}
+            onClick={(event) => {
                 if (isListening) {
                     createPin([event.latLng.lat(), event.latLng.lng()], "New Pin", "New Description");
                     setIsListening(false);
-                    }
                 }
+            }
             }
         >
             {pins.map(pin => (
                 <Marker
-                key={ pin.id }
-                position={{
-                    lat: pin.coordinates[0],
-                    lng: pin.coordinates[1]
-                }}
-                onClick={() => {
-                    setSelectedPin(pin);
-                }}
-                icon={{
-                    scaledSize: new window.google.maps.Size(70, 70)
-                }}
+                    key={pin.id}
+                    position={{
+                        lat: pin.coordinates[0],
+                        lng: pin.coordinates[1]
+                    }}
+                    onClick={() => {
+                        setSelectedPin(pin);
+                    }}
+                    icon={{
+                        scaledSize: new window.google.maps.Size(70, 70)
+                    }}
                 />
             ))}
 
             {selectedPin && (
                 <InfoWindow
-                onCloseClick={() => {
-                    setSelectedPin(null);
-                }}
-                position={{
-                    lat: selectedPin.coordinates[0],
-                    lng: selectedPin.coordinates[1]
-                }}
-                justify="center"
+                    onCloseClick={() => {
+                        setSelectedPin(null);
+                    }}
+                    position={{
+                        lat: selectedPin.coordinates[0],
+                        lng: selectedPin.coordinates[1]
+                    }}
+                    justify="center"
                 >
-                    <div>
+                    <div style={{ width: "300px", height: "200px", padding: "20px" }}>
                         <h2>{selectedPin.location}</h2>
                         <p>{selectedPin.description}</p>
-                        <Link
-                            component="button"
-                            variant="body2"
-                            onClick={() => {}}
-                        >
-                            Expand
-                        </Link>
+                        {/* <Button
+                            color="primary"
+                            variant="contained"
+                            style={{
+                                zIndex: 1,
+                                // marginTop: "-1",
+                                position: "absolute",
+                                // right: "1vh",
+                                height: "65px",
+                                width: "5px",
+                                fontSize: "10px",
+                                borderRadius: "5px",
+                                fontWeight: "10"
+                            }}
+                            onClick={() => {
+                            }}
+
+                        >Expand</Button> */}
+                        <FormModal/>
                     </div>
                 </InfoWindow>
             )}
-
-            <Button 
-                color="primary" 
-                variant="contained" 
-                style={{ 
-                    zIndex: 1, 
-                    position: "absolute", 
-                    top: "4vh",
-                    right: "12vh"
-                }} 
-            >Filter</Button>
-            <Button 
-                color="primary" 
-                variant="contained" 
-                style={{ 
-                    zIndex: 1, 
-                    marginTop: "-15vh", 
-                    position: "absolute", 
-                    right: "12vh", 
-                    height: "65px", 
-                    width: "50px", 
-                    fontSize: "60px", 
-                    borderRadius: "50px", 
-                    fontWeight: "300" 
-                }} 
+            <Button
+                color="primary"
+                variant="contained"
+                style={{
+                    zIndex: 1,
+                    marginTop: "-10vh",
+                    position: "absolute",
+                    right: "12vh",
+                    height: "65px",
+                    width: "50px",
+                    fontSize: "60px",
+                    borderRadius: "50px",
+                    fontWeight: "300"
+                }}
                 onClick={() => {
                     setIsListening(true);
                 }}
+
             >+</Button>
+            <FormModal />
         </GoogleMap>
     );
 }
@@ -120,13 +124,13 @@ export default function Main() {
         <HashRouter>
             <div style={{ width: "97vw", height: "100vh" }}>
 
-            <MapWrapped
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                loadingElement={<div style={{ height: `95%` }} />}
-                containerElement={<div style={{ height: `95%` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-                style={{ zIndex: -1 }}
-            />
+                <MapWrapped
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
+                    loadingElement={<div style={{ height: `95%` }} />}
+                    containerElement={<div style={{ height: `95%` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                    style={{ zIndex: -1 }}
+                />
             </div>
         </HashRouter>
     );
