@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { HashRouter } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { HashRouter, Redirect } from "react-router-dom";
 import { Button, Link } from "@material-ui/core"
 
 import {
@@ -78,35 +78,6 @@ function Map() {
                     </div>
                 </InfoWindow>
             )}
-
-            <Button 
-                color="primary" 
-                variant="contained" 
-                style={{ 
-                    zIndex: 1, 
-                    position: "absolute", 
-                    top: "4vh",
-                    right: "12vh"
-                }} 
-            >Filter</Button>
-            <Button 
-                color="primary" 
-                variant="contained" 
-                style={{ 
-                    zIndex: 1, 
-                    marginTop: "-15vh", 
-                    position: "absolute", 
-                    right: "12vh", 
-                    height: "65px", 
-                    width: "50px", 
-                    fontSize: "60px", 
-                    borderRadius: "50px", 
-                    fontWeight: "300" 
-                }} 
-                onClick={() => {
-                    setIsListening(true);
-                }}
-            >+</Button>
         </GoogleMap>
     );
 }
@@ -115,19 +86,84 @@ const MapWrapped = withScriptjs(withGoogleMap(Map));
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function Main() {
+    const [ isListening, setIsListening ] = useState(false);
+    const [ mapOpacity, setMapOpacity ] = useState(1) 
+    const [ goToLogin, setGoToLogin ] = useState(false);
+
+    useEffect(() => {
+        if (isListening) {
+            window.addEventListener('mousedown', handleCreatePin)
+
+            // Set a timeout to stop listening after 10 seconds
+            const timer = setTimeout(() => {
+                setIsListening(false)
+                setMapOpacity(1)
+            }, 10000);
+
+            // Cleanup function to remove the event listener
+            return () => {
+                window.removeEventListener('mousedown', handleCreatePin)
+                clearTimeout(timer)
+            };
+        }
+
+    }, [isListening])
+
+    if (goToLogin) {
+        return <Redirect to="/login" />
+    }
+
+    const handleCreatePin = (event) => {
+        console.log(event)
+    }
 
     return (
-        <HashRouter>
-            <div style={{ width: "97vw", height: "100vh" }}>
+        
 
-            <MapWrapped
-                googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                loadingElement={<div style={{ height: `95%` }} />}
-                containerElement={<div style={{ height: `95%` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-                style={{ zIndex: -1 }}
-            />
-            </div>
-        </HashRouter>
+            <HashRouter>
+                <div style={{ width: "97vw", height: "100vh", opacity: mapOpacity }}>
+
+                <MapWrapped
+                    googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
+                    loadingElement={<div style={{ height: `95%` }} />}
+                    containerElement={<div style={{ height: `95%` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                    style={{ zIndex: -1 }}
+                />
+                <Button 
+                    color="primary" 
+                    variant="contained" 
+                    style={{ 
+                        zIndex: 1, 
+                        position: "absolute", 
+                        top: "4vh",
+                        right: "12vh"
+                    }} 
+                    onClick={()=>{
+                        setGoToLogin(true);
+                    }}
+                >Sign In</Button>
+                <Button 
+                    color="primary" 
+                    variant="contained" 
+                    style={{ 
+                        zIndex: 1, 
+                        marginTop: "-15vh", 
+                        position: "absolute", 
+                        right: "12vh", 
+                        height: "65px", 
+                        width: "50px", 
+                        fontSize: "60px", 
+                        borderRadius: "50px", 
+                        fontWeight: "300" 
+                    }} 
+                    onClick={() => {
+                        setIsListening(true)
+                        setMapOpacity(0.5)
+                    }}
+                >+</Button>
+                </div>
+            </HashRouter>
+
     );
 }
