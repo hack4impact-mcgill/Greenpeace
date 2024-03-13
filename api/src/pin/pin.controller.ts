@@ -36,6 +36,7 @@ class PinController {
     @Response() response: ExpressResponse,
     @Params('id') id: string
   ) {
+    
     const result: PinDto | null = await this.service.findUnique(Number(id));
 
     const dto: PinResponseDto = result
@@ -63,15 +64,12 @@ class PinController {
       : response.status(500).send(dto);
   }
 
-  @Post('/:id/reaction')
+  @Post('/:id/:reaction')
   async addReaction(
     @Response() response: ExpressResponse,
     @Params('id') id: number,
     @Params('reaction') reaction: string
   ) {
-    console.log(id);
-    console.log(reaction);
-
     // find the pin
     const result: Partial<PinDto> | null = await this.service.findUnique(Number(id));
 
@@ -81,8 +79,6 @@ class PinController {
     }
     else {
       result!!.reactions?.push(reaction)
-      // (for testing purposes as we're still working on this function)
-      // result!!.reactions?.push("like_test")
 
       // update the pin and send success message
       const new_pin: PinDto | null = await this.service.update(Number(id), result);
@@ -123,7 +119,7 @@ class PinController {
       : response.status(404).send(dto);
   }
 
-  @Delete('/:id/reaction')
+  @Delete('/:id/:reaction')
   async deleteReaction(
     @Response() response: ExpressResponse,
     @Params('id') id: number,
