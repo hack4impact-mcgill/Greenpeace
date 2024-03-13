@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { HashRouter } from "react-router-dom";
+import { HashRouter, Redirect } from "react-router-dom";
 import { Box, Button, Link } from "@material-ui/core"
 import ChangeLog from "./ChangeLog";
-
 import {
     withScriptjs,
     withGoogleMap,
@@ -90,16 +89,6 @@ function Map() {
                 variant="contained"
                 style={{
                     zIndex: 1,
-                    position: "absolute",
-                    top: "4vh",
-                    right: "12vh"
-                }}
-            >Filter</Button>
-            <Button
-                color="primary"
-                variant="contained"
-                style={{
-                    zIndex: 1,
                     marginTop: "-15vh",
                     position: "absolute",
                     right: "12vh",
@@ -121,12 +110,16 @@ const MapWrapped = withScriptjs(withGoogleMap(Map));
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export default function Main() {
+    const [goToLogin, setGoToLogin] = useState(false);
+
+    if (goToLogin) {
+        return <Redirect to="/login" />
+    }
 
     return (
         <HashRouter>
             <PinDataProvider>
                 <div style={{ width: "97vw", height: "100vh" }}>
-
                     <MapWrapped
                         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
                         loadingElement={<div style={{ height: `95%` }} />}
@@ -134,6 +127,19 @@ export default function Main() {
                         mapElement={<div style={{ height: `100%` }} />}
                         style={{ zIndex: -1 }}
                     />
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        style={{
+                            zIndex: 1,
+                            position: "absolute",
+                            top: "4vh",
+                            right: "12vh"
+                        }}
+                        onClick={() => {
+                            setGoToLogin(true);
+                        }}
+                    >Sign In</Button>
                 </div>
             </PinDataProvider>
         </HashRouter>

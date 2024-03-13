@@ -16,4 +16,6 @@ export interface PinDto {
   coordinateY: number;
   isValid?: boolean;
   createdAt: Date;
+  category: string;
+  reactions?: string[];
 }
