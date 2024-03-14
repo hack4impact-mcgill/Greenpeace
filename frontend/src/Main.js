@@ -17,13 +17,25 @@ function Map() {
     const [pins, setPins] = useState([]);
     const [isListening, setIsListening] = useState(false);
 
-    const createPin = (coordinates, name, description) => {
+    const createPin = (pinInfo) => {
         setPins([...pins, {
             id: pins.length,
-            coordinates: coordinates,
-            location: name,
-            description: description
+            coordinates: pinInfo.coordinates,
+            name: pinInfo.name,
+            address: pinInfo.address,
+            category: pinInfo.category,
+            description: pinInfo.description,
+            review: pinInfo.review,
         }])
+    }
+
+    const handlePublishPin = (pinToPublish, pinInfo) => {
+        pinToPublish.name = pinInfo.name;
+        pinToPublish.address = pinInfo.address;
+        pinToPublish.category = pinInfo.category;
+        pinToPublish.description = pinInfo.description;
+        pinToPublish.review = pinInfo.review;
+        setSelectedPin(pinToPublish);
     }
 
     return (
@@ -33,7 +45,15 @@ function Map() {
             options={{ styles: mapStyles }}
             onClick={(event) => {
                 if (isListening) {
-                    createPin([event.latLng.lat(), event.latLng.lng()], "New Pin", "New Description");
+                    const pinInfo = {
+                        coordinates: [event.latLng.lat(), event.latLng.lng()],
+                        name: "New Pin Name",
+                        address: "New Address",
+                        category: "New Category",
+                        description: "New Description",
+                        review: "New Review",
+                    };
+                    createPin(pinInfo);
                     setIsListening(false);
                 }
             }
@@ -67,9 +87,15 @@ function Map() {
                     justify="center"
                 >
                     <div style={{ width: "300px", height: "200px", padding: "20px" }}>
-                        <h2>{selectedPin.location}</h2>
+                        <h2>{selectedPin.name}</h2>
+                        <p>{selectedPin.address}</p>
+                        <p>{selectedPin.category}</p>
                         <p>{selectedPin.description}</p>
-                        <FormModal/>
+                        <p>{selectedPin.review}</p>
+                        <FormModal
+                         pinToPublish={selectedPin}
+                         handlePublishPin={handlePublishPin}
+                         />
                     </div>
                 </InfoWindow>
             )}
@@ -92,7 +118,7 @@ function Map() {
                 }}
 
             >+</Button>
-            <FormModal />
+            {/* <FormModal /> */}
         </GoogleMap>
     );
 }

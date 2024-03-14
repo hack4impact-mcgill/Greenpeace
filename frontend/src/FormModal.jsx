@@ -23,7 +23,7 @@ const style = {
     p: 4,
 };
 
-export default function FormModal() {
+export default function FormModal({ pinToPublish, handlePublishPin }) {
 
     const [open, setOpen] = React.useState(false);
     const [category, setCategory] = React.useState('');
@@ -81,11 +81,16 @@ export default function FormModal() {
     const handlePublish = (event) => {
         // TODO: add the properties of the pin to a database after publishing
         if (validatePreview) {
-            console.log(name)
-            console.log(address)
-            console.log(category)
-            console.log(description)
-            console.log(review)
+
+            const pinInfo = {
+                name: name,
+                address: address,
+                category: category,
+                description: description,
+                review: review,
+            };
+            handlePublishPin(pinToPublish, pinInfo);
+
             setOpen(false);
             setAddress('');
             setCategory('');
