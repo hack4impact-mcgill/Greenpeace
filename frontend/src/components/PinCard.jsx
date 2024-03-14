@@ -53,7 +53,6 @@ const PinCard = ({ date, name, category }) => {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
-              getContentAnchorEl={null}
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
               <MenuItem style={{ display: 'inline-block' }} onClick={handleEdit}>EDIT</MenuItem>

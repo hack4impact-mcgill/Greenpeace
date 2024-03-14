@@ -9,9 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import PinCard from "./PinCard";
-import { PinDataContext } from "./context/PinDataContext";
-
+import PinCard from "../PinCard";
+import { PinDataContext } from "../../context/PinDataContext";
+import "./ChangeLog.css";
 
 export default function ChangeLog() {
   const [state, setState] = React.useState({
@@ -67,44 +67,12 @@ export default function ChangeLog() {
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
       >
-        <div
-          style={{
-            width: 400,
-          }}
-        >
-          <div
-            style={{
-              height: 75,
-              backgroundColor: "#3E654A",
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-              paddingLeft: 20,
-            }}
-          >
+        <div className="drawer">
+          <div className="header">
             <Typography style={{ color: "white" }}>Change Log</Typography>
           </div>
-          <div
-            style={{
-              width: "70%",
-              margin: "20px 50px",
-              display: "flex",
-              alignItems: "center",
-              padding: 10,
-              boxShadow: "0 2px 30px rgba(0,0,0,0.1)",
-            }}
-          >
-            <div
-              style={{
-                height: "100%",
-                position: "absolute",
-                right: "15%",
-                pointerEvents: "none",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
+          <div className="searchBar">
+            <div className="searchIcon">
               <SearchIcon />
             </div>
             <InputBase
@@ -114,15 +82,7 @@ export default function ChangeLog() {
               onChange={handleSearchChange}
             />
           </div>
-          <FormControl
-            variant="outlined"
-            style={{
-              width: "45%",
-              margin: "20px 50px",
-              display: "flex",
-              boxShadow: "0 2px 30px rgba(0,0,0,0.1)",
-            }}
-          >
+          <FormControl variant="outlined" className="selectMenu">
             <InputLabel id="category-select-label">Filter</InputLabel>
             <Select
               label="Filter"

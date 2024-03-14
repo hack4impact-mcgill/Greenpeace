@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { HashRouter, Redirect } from "react-router-dom";
-import { Box, Button, Link } from "@mui/material";
-import ChangeLog from "./ChangeLog";
+import React, { useState } from "react";
+import { Box, Link, Button } from "@mui/material";
+import ChangeLog from "../ChangeLog/ChangeLog";
 import {
     GoogleMap,
     Marker,
@@ -9,9 +8,11 @@ import {
     useJsApiLoader,
 } from "@react-google-maps/api";
 import mapStyles from './mapStyles';
-import { PinDataProvider } from "./context/PinDataContext";
 
-function Map() {
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+
+export function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
     const [pins, setPins] = useState([]);
     const [isListening, setIsListening] = useState(false);
@@ -32,7 +33,7 @@ function Map() {
     }
 
     const onLoad = React.useCallback(function callback(map) {
-        const bounds = new window.google.maps.LatLngBounds();
+        const bounds = new window.google.maps.LatLngBounds({ lat: 45.5048, lng: -73.5772 });
         map.fitBounds(bounds);
     }, []);
 
@@ -42,9 +43,8 @@ function Map() {
 
     return (
         <GoogleMap
-            defaultZoom={19}
-            defaultCenter={{ lat: 45.5048, lng: -73.5772 }}
-            options={{ styles: mapStyles }}
+            zoom={19}
+            options={{ styles: mapStyles }} // TODO: not working
             onLoad={onLoad}
             onClick={(event) => {
                 if (isListening) {
@@ -118,84 +118,5 @@ function Map() {
                 }}
             >+</Button>
         </GoogleMap>
-    );
-}
-
-const MapWrapped = Map;
-const API_KEY = process.env.REACT_APP_API_KEY;
-
-export default function Main() {
-    const [isListening, setIsListening] = useState(false);
-    const [mapOpacity, setMapOpacity] = useState(1)
-    const [goToLogin, setGoToLogin] = useState(false);
-
-    useEffect(() => {
-        if (isListening) {
-            window.addEventListener('mousedown', handleCreatePin)
-
-            // Set a timeout to stop listening after 10 seconds
-            const timer = setTimeout(() => {
-                setIsListening(false)
-                setMapOpacity(1)
-            }, 10000);
-
-            // Cleanup function to remove the event listener
-            return () => {
-                window.removeEventListener('mousedown', handleCreatePin)
-                clearTimeout(timer)
-            };
-        }
-
-    }, [isListening])
-
-
-    if (goToLogin) {
-        return <Redirect to="/login" />
-    }
-
-    const handleCreatePin = (event) => {
-        console.log(event)
-    }
-
-    return (
-        <HashRouter>
-            <PinDataProvider>
-                <div style={{ width: "97vw", height: "100vh", opacity: mapOpacity }}>
-                    <MapWrapped />
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        style={{
-                            zIndex: 1,
-                            position: "absolute",
-                            top: "4vh",
-                            right: "12vh"
-                        }}
-                        onClick={() => {
-                            setGoToLogin(true);
-                        }}
-                    >Sign In</Button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        style={{
-                            zIndex: 1,
-                            marginTop: "-15vh",
-                            position: "absolute",
-                            right: "12vh",
-                            height: "65px",
-                            width: "50px",
-                            fontSize: "60px",
-                            borderRadius: "50px",
-                            fontWeight: "300"
-                        }}
-                        onClick={() => {
-                            setIsListening(true)
-                            setMapOpacity(0.5)
-                        }}
-                    >+</Button>
-                </div>
-            </PinDataProvider>
-        </HashRouter>
     );
 }

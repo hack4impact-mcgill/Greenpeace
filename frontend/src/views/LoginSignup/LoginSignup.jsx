@@ -1,7 +1,7 @@
 import React,{ useState } from "react";
 import './LoginSignup.css'
-import { TextField, Button } from "@material-ui/core/"
-import logo from '../assets/Greenpeace_logo.png'
+import { TextField, Button } from "@mui/material"
+import logo from '../../assets/Greenpeace_logo.png'
 
 const LoginSignup =  () => {
 
@@ -23,8 +23,6 @@ const LoginSignup =  () => {
     };
 
     const handleLoginSignup = () => {
-        //console.log(email);
-        //console.log(password); 
         if (email.trim() !== "" && password.trim() !== ""){
             setEmail('');
             setErrorEmail(false);
