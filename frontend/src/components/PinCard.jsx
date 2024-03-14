@@ -1,14 +1,14 @@
 import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import RoomIcon from '@material-ui/icons/Room';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import RoomIcon from '@mui/icons-material/Room';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 const PinCard = ({ date, name, category }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,7 +37,6 @@ const PinCard = ({ date, name, category }) => {
           <Avatar>
             <RoomIcon />
           </Avatar>
-
         }
         action={
           <div>
@@ -54,7 +53,6 @@ const PinCard = ({ date, name, category }) => {
               keepMounted
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
-              getContentAnchorEl={null}
               anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             >
               <MenuItem style={{ display: 'inline-block' }} onClick={handleEdit}>EDIT</MenuItem>

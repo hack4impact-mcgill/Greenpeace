@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import { HashRouter, Redirect } from "react-router-dom";
-import { Box, Button, Link } from "@material-ui/core"
-import ChangeLog from "./ChangeLog";
+import { Box, Link, Button } from "@mui/material";
+import ChangeLog from "../ChangeLog/ChangeLog";
 import {
-    withScriptjs,
-    withGoogleMap,
     GoogleMap,
     Marker,
     InfoWindow,
-} from "react-google-maps";
+    useJsApiLoader,
+} from "@react-google-maps/api";
 import mapStyles from './mapStyles';
-import { PinDataProvider } from "./context/PinDataContext";
 
-function Map() {
+const API_KEY = process.env.REACT_APP_API_KEY;
+
+
+export function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
     const [pins, setPins] = useState([]);
     const [isListening, setIsListening] = useState(false);
+    const { isLoaded, loadError } = useJsApiLoader({
+        id: "google-map-script",
+        googleMapsApiKey: API_KEY,
+        libraries: ["places", "geometry", "drawing"],
+        version: "3.exp",
+    });
 
     const createPin = (coordinates, name, description) => {
         setPins([...pins, {
@@ -26,18 +32,27 @@ function Map() {
         }])
     }
 
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds({ lat: 45.5048, lng: -73.5772 });
+        map.fitBounds(bounds);
+    }, []);
+
+
+    if (loadError) return <h1>{loadError}</h1>
+    if (!isLoaded) return <h1>Loading</h1>;
+
     return (
         <GoogleMap
-            defaultZoom={19}
-            defaultCenter={{ lat: 45.5048, lng: -73.5772 }}
-            options={{ styles: mapStyles }}
+            zoom={19}
+            options={{ styles: mapStyles }} // TODO: not working
+            onLoad={onLoad}
             onClick={(event) => {
                 if (isListening) {
                     createPin([event.latLng.lat(), event.latLng.lng()], "New Pin", "New Description");
                     setIsListening(false);
                 }
-            }
-            }
+            }}
+            mapContainerStyle={{ height: "100%" }}
         >
             {pins.map(pin => (
                 <Marker
@@ -103,45 +118,5 @@ function Map() {
                 }}
             >+</Button>
         </GoogleMap>
-    );
-}
-
-const MapWrapped = withScriptjs(withGoogleMap(Map));
-const API_KEY = process.env.REACT_APP_API_KEY;
-
-export default function Main() {
-    const [goToLogin, setGoToLogin] = useState(false);
-
-    if (goToLogin) {
-        return <Redirect to="/login" />
-    }
-
-    return (
-        <HashRouter>
-            <PinDataProvider>
-                <div style={{ width: "97vw", height: "100vh" }}>
-                    <MapWrapped
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${API_KEY}&v=3.exp&libraries=geometry,drawing,places}`}
-                        loadingElement={<div style={{ height: `95%` }} />}
-                        containerElement={<div style={{ height: `95%` }} />}
-                        mapElement={<div style={{ height: `100%` }} />}
-                        style={{ zIndex: -1 }}
-                    />
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        style={{
-                            zIndex: 1,
-                            position: "absolute",
-                            top: "4vh",
-                            right: "12vh"
-                        }}
-                        onClick={() => {
-                            setGoToLogin(true);
-                        }}
-                    >Sign In</Button>
-                </div>
-            </PinDataProvider>
-        </HashRouter>
     );
 }
