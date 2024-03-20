@@ -23,7 +23,7 @@ const style = {
     p: 4,
 };
 
-export default function FormModal({ pinToPublish, handlePublishPin }) {
+export default function FormModal({ pinToPublish, handlePublishPin, resetSelectedPin }) {
 
     const [open, setOpen] = React.useState(false);
     const [category, setCategory] = React.useState('');
@@ -34,7 +34,6 @@ export default function FormModal({ pinToPublish, handlePublishPin }) {
 
     const [nameError, setNameError] = React.useState(false);
     const [addressError, setAddressError] = React.useState(false);
-    const [validatePreview, setValidatePreview] = React.useState(false);
     const [selectColor, setSelectColor] = React.useState("primary");
 
     const handleOpen = () => setOpen(true);
@@ -46,7 +45,8 @@ export default function FormModal({ pinToPublish, handlePublishPin }) {
     const handleDescriptionChange = (event) => { setDescription(event.target.value); }
     const handleReviewChange = (event) => { setReview(event.target.value); }
 
-    const handlePreview = (event) => {
+    // publish adds the pin to board, adds info to database, and clears the popup menu
+    const handlePublish = (event) => {
         if (name === "") {
             setNameError(true);
         } else {
@@ -64,24 +64,10 @@ export default function FormModal({ pinToPublish, handlePublishPin }) {
         }
 
         if (name !== "" && address !== "" && category !== "") {
-            console.log(name)
-            console.log(address)
-            console.log(category)
-            console.log(description)
-            console.log(review)
-            setValidatePreview(true);
             setNameError(false);
             setAddressError(false);
             setSelectColor("primary");
-        } else {
-            setValidatePreview(false);
-        }
-    };
-    // publish adds the pin to board, adds info to database, and clears the popup menu
-    const handlePublish = (event) => {
-        // TODO: add the properties of the pin to a database after publishing
-        if (validatePreview) {
-
+            
             const pinInfo = {
                 name: name,
                 address: address,
@@ -90,6 +76,7 @@ export default function FormModal({ pinToPublish, handlePublishPin }) {
                 review: review,
             };
             handlePublishPin(pinToPublish, pinInfo);
+            resetSelectedPin();
 
             setOpen(false);
             setAddress('');
@@ -98,7 +85,6 @@ export default function FormModal({ pinToPublish, handlePublishPin }) {
             setName('');
             setReview('');
         }
-        setValidatePreview(false);
     };
 
     //function 
@@ -223,11 +209,6 @@ export default function FormModal({ pinToPublish, handlePublishPin }) {
                             />
                         </div>
                         <div className='formButtons'>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                onClick={handlePreview}
-                            >Preview your pin</Button>
                             <Button
                                 color="primary"
                                 variant="contained"

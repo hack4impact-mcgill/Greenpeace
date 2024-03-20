@@ -14,6 +14,7 @@ import FormModal from './FormModal';
 
 function Map() {
     const [selectedPin, setSelectedPin] = useState(null);
+    const [refreshPin, setRefreshPin] = useState(null);
     const [pins, setPins] = useState([]);
     const [isListening, setIsListening] = useState(false);
 
@@ -36,6 +37,12 @@ function Map() {
         pinToPublish.description = pinInfo.description;
         pinToPublish.review = pinInfo.review;
         setSelectedPin(pinToPublish);
+    }
+
+    const resetSelectedPin = (selectedPin) => {
+        setRefreshPin(selectedPin)
+        setSelectedPin(null)
+        setSelectedPin(refreshPin)
     }
 
     return (
@@ -80,6 +87,7 @@ function Map() {
                     onCloseClick={() => {
                         setSelectedPin(null);
                     }}
+
                     position={{
                         lat: selectedPin.coordinates[0],
                         lng: selectedPin.coordinates[1]
@@ -93,9 +101,10 @@ function Map() {
                         <p>{selectedPin.description}</p>
                         <p>{selectedPin.review}</p>
                         <FormModal
-                         pinToPublish={selectedPin}
-                         handlePublishPin={handlePublishPin}
-                         />
+                            pinToPublish={selectedPin}
+                            handlePublishPin={handlePublishPin}
+                            resetSelectedPin={resetSelectedPin}
+                        />
                     </div>
                 </InfoWindow>
             )}
