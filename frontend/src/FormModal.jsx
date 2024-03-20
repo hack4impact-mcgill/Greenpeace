@@ -1,15 +1,15 @@
 import * as React from 'react';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select, { } from '@material-ui/core/Select';
-import { FormHelperText } from '@material-ui/core';
-import './styles.css'
+import Box from '@mui/material/Box'; // Updated import statement
+import Button from '@mui/material/Button'; // Updated import statement
+import Typography from '@mui/material/Typography'; // Updated import statement
+import Modal from '@mui/material/Modal'; // Updated import statement
+import TextField from '@mui/material/TextField'; // Updated import statement
+import InputLabel from '@mui/material/InputLabel'; // Updated import statement
+import MenuItem from '@mui/material/MenuItem'; // Updated import statement
+import FormControl from '@mui/material/FormControl'; // Updated import statement
+import Select from '@mui/material/Select'; // Updated import statement
+import FormHelperText from '@mui/material/FormHelperText'; // Updated import statement
+import './styles.css';
 
 const style = {
     position: 'absolute',

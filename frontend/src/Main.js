@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { HashRouter } from "react-router-dom";
-import { Button } from "@material-ui/core"
+import { Button } from "@mui/material";
 
 import {
     withScriptjs,
