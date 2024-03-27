@@ -144,8 +144,8 @@ export function Map() {
         variant="contained"
         style={{
           zIndex: 1,
-          marginTop: "-10vh",
           position: "absolute",
+          bottom: "8vh",
           right: "12vh",
           height: "65px",
           width: "50px",
