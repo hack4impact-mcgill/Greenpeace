@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Link, Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import ChangeLog from "../ChangeLog/ChangeLog";
 import {
   GoogleMap,
@@ -8,11 +8,13 @@ import {
   useJsApiLoader,
 } from "@react-google-maps/api";
 import mapStyles from "./mapStyles";
+import FormModal from "../../components/FormModel";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 export function Map() {
   const [selectedPin, setSelectedPin] = useState(null);
+  const [refreshPin, setRefreshPin] = useState(null);
   const [pins, setPins] = useState([]);
   const [isListening, setIsListening] = useState(false);
   const { isLoaded, loadError } = useJsApiLoader({
@@ -22,16 +24,34 @@ export function Map() {
     version: "3.exp",
   });
 
-  const createPin = (coordinates, name, description) => {
+  const createPin = (pinInfo) => {
     setPins([
       ...pins,
       {
         id: pins.length,
-        coordinates: coordinates,
-        location: name,
-        description: description,
+        coordinates: pinInfo.coordinates,
+        name: pinInfo.name,
+        address: pinInfo.address,
+        category: pinInfo.category,
+        description: pinInfo.description,
+        review: pinInfo.review,
       },
     ]);
+  };
+
+  const handlePublishPin = (pinToPublish, pinInfo) => {
+    pinToPublish.name = pinInfo.name;
+    pinToPublish.address = pinInfo.address;
+    pinToPublish.category = pinInfo.category;
+    pinToPublish.description = pinInfo.description;
+    pinToPublish.review = pinInfo.review;
+    setSelectedPin(pinToPublish);
+  };
+
+  const resetSelectedPin = (selectedPin) => {
+    setRefreshPin(selectedPin);
+    setSelectedPin(null);
+    setSelectedPin(refreshPin);
   };
 
   const onLoad = React.useCallback(function callback(map) {
@@ -52,11 +72,15 @@ export function Map() {
       onLoad={onLoad}
       onClick={(event) => {
         if (isListening) {
-          createPin(
-            [event.latLng.lat(), event.latLng.lng()],
-            "New Pin",
-            "New Description"
-          );
+          const pinInfo = {
+            coordinates: [event.latLng.lat(), event.latLng.lng()],
+            name: "New Pin Name",
+            address: "New Address",
+            category: "New Category",
+            description: "New Description",
+            review: "New Review",
+          };
+          createPin(pinInfo);
           setIsListening(false);
         }
       }}
@@ -89,12 +113,17 @@ export function Map() {
           }}
           justify="center"
         >
-          <div>
-            <h2>{selectedPin.location}</h2>
+          <div style={{ width: "300px", height: "200px", padding: "20px" }}>
+            <h2>{selectedPin.name}</h2>
+            <p>{selectedPin.address}</p>
+            <p>{selectedPin.category}</p>
             <p>{selectedPin.description}</p>
-            <Link component="button" variant="body2" onClick={() => {}}>
-              Expand
-            </Link>
+            <p>{selectedPin.review}</p>
+            <FormModal
+              pinToPublish={selectedPin}
+              handlePublishPin={handlePublishPin}
+              resetSelectedPin={resetSelectedPin}
+            />
           </div>
         </InfoWindow>
       )}
@@ -115,14 +144,14 @@ export function Map() {
         variant="contained"
         style={{
           zIndex: 1,
+          marginTop: "-10vh",
           position: "absolute",
+          right: "12vh",
           height: "65px",
           width: "50px",
           fontSize: "60px",
           borderRadius: "50px",
           fontWeight: "300",
-          top: "100%",
-          right: "30px",
         }}
         onClick={() => {
           setIsListening(true);

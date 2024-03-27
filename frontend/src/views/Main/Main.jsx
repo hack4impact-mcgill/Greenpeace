@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { PinDataProvider } from "../../context/PinDataContext";
 import { Map } from "../../components/Map/Map";
 
+
 export default function Main() {
   const [goToLogin, setGoToLogin] = useState(false);
   const history = useHistory();
