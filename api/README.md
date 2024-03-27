@@ -23,7 +23,7 @@ You should then see the status "Server listening on port 3000."
 - `/{id}`: retrieve the pin with the given id
 
 ### POST
-- `/`: create a pin given certain pin properties 
+- `/`: create a pin with the given pin properties 
 
 ### PUT
 - `/{id}/{reaction}`: add a reaction to the pin with the given id
