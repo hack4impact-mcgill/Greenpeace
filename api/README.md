@@ -33,7 +33,7 @@ After the dependencies are installed, you can run the project. In the `api` dire
 | Route   | Description                        |
 | ------- | ---------------------------------- |
 | `/`     | Retrieve all pins in the database  |
-| `/{id}` | retrieve the pin with the given id |
+| `/{id}` | Retrieve the pin with the given id |
 
 ### POST
 | Route   | Description                        |
@@ -67,4 +67,4 @@ It is possible you have not migragted the database with the updated Prisma schem
 In your terminal, run the command `npx prisma migrate dev`.
 
 ## Misc
-- To access the database directly, run the command `psql -U greenpeace`
+- To directly access the database, run the command `psql -U greenpeace`
