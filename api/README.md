@@ -25,7 +25,7 @@ After the dependencies are installed, you can run the project. In the `api` dire
 | `isValid`     | `Boolean` | If the pin is valid |
 | `createdAt`   | `DateTime`| The time of the pin's creation |
 | `category`    | `String`  | A descriptive category for the pin, like `"Restaurant"` |
-| `reactions`   | `String[]`| A list of reactions to the given pin, like `["Like", "Heart", "Good Value"]` |
+| `reactions`   | `String[]`| A list of reactions for the given pin, like `["Like", "Love", "Good Value"]` |
 
 ## Methods
 
