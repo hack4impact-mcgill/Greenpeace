@@ -9,56 +9,62 @@ The backend of the application saves user-inputted information about the pins on
 
 First, install the necessary packages with the command `npm install`.
 
-Note: whenever new packages are added to the project, developers pulling from GitHub must re-run this command.
+> Note: whenever new packages are added to the project, re-run this command.
 
 ## Running
-After the dependencies are installed, you can run the project. In the `api` directory, run the following command `npm run debug:watch`.
-
-You should then see the status "Server listening on port 3000."
+After the dependencies are installed, you can run the project. In the `api` directory, run the following command `npm run debug:watch`. You should then see the status *Server listening on port 3000*.
 
 ## Pin properties
-- id (Int): the unique ID of the pin
-- name (String): a short description of the pin e.g., "Joe's Pizza"
-- description (String): a longer description of the pin e.g., "The best pizza + they donate leftovers to local shelters"
-- coordinateX (Float): the x-coordinate of the pin's location on the map
-- coordinateY (Float): the y-coordinate of the pin's location on the map
-- isValid (Boolean): if the pin is valid
-- createdAt (DateTime): the time of the pin's creation
-- category (String): a descriptive category for the pin e.g., "Restaurant"
-- reactions (String[]): a list of reactions to the given pin e.g., ["Like", "Heart", "Good Value"]
+| Name          | Type      | Description |
+| ------------- | --------- | ----------- |
+| `id`          | `Int`     | The unique ID of the pin |
+| `name`        | `String`  | A short description of the pin, like `"Joe's Pizza"` |
+| `description` | `String`  | A longer description of the pin, like `"The best pizza + they donate leftovers to local shelters"` |
+| `coordinateX` | `Float`   | The x-coordinate of the pin's location on the map |
+| `coordinateY` | `Float`   | The y-coordinate of the pin's location on the map |
+| `isValid`     | `Boolean` | If the pin is valid |
+| `createdAt`   | `DateTime`| The time of the pin's creation |
+| `category`    | `String`  | A descriptive category for the pin, like `"Restaurant"` |
+| `reactions`   | `String[]`| A list of reactions to the given pin, like `["Like", "Heart", "Good Value"]` |
 
 ## Methods
 
 ### GET
-- `/`: retrieve all pins in the database
-- `/{id}`: retrieve the pin with the given id
+| Route   | Description                        |
+| ------- | ---------------------------------- |
+| `/`     | Retrieve all pins in the database  |
+| `/{id}` | retrieve the pin with the given id |
 
 ### POST
-- `/`: create a pin with the given pin properties 
+| Route   | Description                        |
+| ------- | ---------------------------------- |
+| `/`     | Create a pin with the given pin properties (passed in the body of the request) |
 
 ### PUT
-- `/{id}/{reaction}`: add a reaction to the pin with the given id
-- `/{id}`: update the pin with the given id with the given pin properties
+| Route              | Description                                 |
+| ------------------ | ------------------------------------------- |
+| `/{id}/{reaction}` | Add a reaction to the pin with the given id |
+| `/{id}`            | Update the pin with the given id with the given pin properties (passed in the body of the request) |
 
 ### DELETE
-- `/{id}`: delete the pin with the given id
-- `/{id}/{reaction}`: delete the given reaction from the pin with the given id 
+| Route              | Description                                 |
+| ------------------ | ------------------------------------------- |
+| `/{id}`            | Delete the pin with the given id            |
+| `/{id}/{reaction}` | Delete the given reaction from the pin with the given id |
 
-## Common Issues
+## Common issues
 
-### Issue: 
+### Issue 
 When trying to run the project, you receive the following error messages:
-- "Unable to compile TypeScript"
-- "Object literal may only specify known properties, but [ABC] does not exist in type"
-- "Did you mean to write [XYZ]?"
+- *Unable to compile TypeScript*
+- *Object literal may only specify known properties, but "ABC" does not exist in type*
+- *Did you mean to write "XYZ"?*
 
-### Reason (Suspected):
+### Reason (suspected)
 It is possible you have not migragted the database with the updated Prisma schema.
 
-### Possible Solutions:
-- In your terminal, run the command `npx prisma migrate dev`
+### Possible solution
+In your terminal, run the command `npx prisma migrate dev`.
 
 ## Misc
-- To access the database, run the command `psql -U greenpeace`
-
-Feel free to add any other issues, or let the leads know!
+- To access the database directly, run the command `psql -U greenpeace`
