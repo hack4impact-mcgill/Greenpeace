@@ -54,7 +54,7 @@ If you are seeing something similar to this [view](/frontend/src/assets/error_ho
 `Error: error:0308010C:digital envelope routines::unsupported`
 
 ### Reason (Suspected):
-The current API and framework isn't compatible with every version of Node.
+The current API and framework isn't compatible with every version of Node. It is a toolchain problem; it might requires switching to another toolchain(e.g. vite) to solve.
 
 ### Possible Solutions:
 - Downgrade the Node version to v16.20.2 (detailed in https://stackoverflow.com/questions/69692842/error-message-error0308010cdigital-envelope-routinesunsupported)
